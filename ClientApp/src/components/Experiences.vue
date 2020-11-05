@@ -34,9 +34,6 @@
 
     @Component({
         name: 'Home',
-        components: {
-            ExperienceCards,
-        }
     })
     export default class ExperienceCards extends Vue{
         private experiences =  {
