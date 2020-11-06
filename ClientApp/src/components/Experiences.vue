@@ -1,7 +1,7 @@
 ﻿<template>
     <v-parallax src="misty-forest.jpg" :height="paralexHeight">
         <v-container>
-            <v-row justify="center">
+            <v-row justify="center" v-if="paralexHeight < 1000">
                 <div class="my-5 display-2 font-weight-bold text-center">
                     Ervaringen
                 </div>
@@ -42,7 +42,7 @@
     import Component from 'vue-class-component'
 
     @Component({
-        name: 'Home',
+        name: 'ExperienceCards',
     })
     export default class ExperienceCards extends Vue{
         private experiences =  {
@@ -62,15 +62,16 @@
                 items: ["Docker", "Git", "Visual studio"]
             }
         };
-
+        
         get paralexHeight(){
             switch (this.$vuetify.breakpoint.name) {
-                case 'xs': return '200px'
-                case 'sm': return '400px'
-                case 'md': return '600px'
-                case 'lg': return '800px'
-                case 'xl': return '1000px'
+                case 'xs': return '1000'
+                case 'sm': return '900'
+                case 'md': return '600'
+                case 'lg': return '500'
+                case 'xl': return '500'
             }
+            
         }
     }
 </script>
