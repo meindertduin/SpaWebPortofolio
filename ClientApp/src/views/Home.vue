@@ -52,7 +52,7 @@
       </v-container>
     </div>
     <div class="secondary darken-2 page-container">
-      
+      <Contact />
     </div>
   </div>
 </template>
@@ -62,12 +62,14 @@
   import Component from 'vue-class-component'
   import Projects from "@/components/Projects.vue";
   import ExperienceCards from "@/components/Experiences.vue";
+  import Contact from "@/components/Contact.vue";
   
   @Component({
     name: 'Home',
     components: {
       ExperienceCards,
-      Projects,    
+      Projects, 
+      Contact,
     }
   })
   export default class Home extends Vue{
