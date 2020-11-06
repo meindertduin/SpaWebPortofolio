@@ -31,16 +31,7 @@
         </v-row>
       </v-container>
     </div>
-    <v-parallax src="misty-forest.jpg" :height="paralexHeight">
-      <v-container>
-        <v-row justify="center">
-          <div class="my-5 display-2 font-weight-bold text-center">
-            Ervaringen
-          </div>
-        </v-row>
-        <ExperienceCards class="my-5" />
-      </v-container>
-    </v-parallax>
+      <ExperienceCards />
     <div class="secondary page-container">
       <Projects />
     </div>
@@ -66,15 +57,7 @@
     }
   })
   export default class Home extends Vue{
-    get paralexHeight(){
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '200px'
-        case 'sm': return '400px'
-        case 'md': return '600px'
-        case 'lg': return '800px'
-        case 'xl': return '1000px'
-      }
-    }
+    
   }
 </script>
 
