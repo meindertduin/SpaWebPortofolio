@@ -1,6 +1,6 @@
 ﻿<template>
     <v-row justify="center">
-        <v-col class="col-8 col-md-2 col-sm-6" v-for="(category, categoryIndex) in experiences" :key="categoryIndex">
+        <v-col class="col-8 col-md-3 col-xl-2 col-sm-6" v-for="(category, categoryIndex) in experiences" :key="categoryIndex">
             <v-card height="300px" width="250px">
                 <v-card-text>
                     <v-row justify="center">

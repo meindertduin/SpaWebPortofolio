@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-img src="misty-waters.jpg" min-height="500">
+    <v-img src="misty-waters.jpg" min-height="900px">
       <v-row class="fill-height ma-6" justify="center" align-content="center">
         <div class="text-center">
           <div class="display-2 font-weight-bold white--text">Welkom bij mijn</div>
@@ -31,7 +31,7 @@
         </v-row>
       </v-container>
     </div>
-    <v-parallax src="misty-forest.jpg">
+    <v-parallax src="misty-forest.jpg" :height="paralexHeight">
       <v-container>
         <v-row justify="center">
           <div class="my-5 display-2 font-weight-bold text-center">
@@ -42,14 +42,7 @@
       </v-container>
     </v-parallax>
     <div class="secondary page-container">
-      <v-container fluid>
-        <div class="text-center display-2 font-weight-bold text--white">Projecten</div>
-        <v-row justify="center" class="ma-5">
-          <v-col class="col-md-8">
-            <Projects />
-          </v-col>
-        </v-row>
-      </v-container>
+      <Projects />
     </div>
     <div class="secondary darken-2 page-container">
       <Contact />
@@ -73,7 +66,15 @@
     }
   })
   export default class Home extends Vue{
-    
+    get paralexHeight(){
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return '200px'
+        case 'sm': return '400px'
+        case 'md': return '600px'
+        case 'lg': return '800px'
+        case 'xl': return '1000px'
+      }
+    }
   }
 </script>
 
