@@ -45,11 +45,14 @@
       <v-container fluid>
         <div class="text-center display-2 font-weight-bold text--white">Projecten</div>
         <v-row justify="center" class="ma-5">
-          <v-col cols="8">
+          <v-col class="col-md-8">
             <Projects />
           </v-col>
         </v-row>
       </v-container>
+    </div>
+    <div class="secondary darken-2 page-container">
+      
     </div>
   </div>
 </template>
