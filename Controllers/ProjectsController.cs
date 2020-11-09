@@ -67,7 +67,7 @@ namespace SpaWebPortofolio.Controllers
                 Features = projectForm.Features,
             };
 
-            if (projectForm.ScreenShots != null)
+            if (projectForm.ScreenShots.Count > 0)
             {
                 var projectImages = await ConvertImages(projectForm.ScreenShots);
                 newProject.Images = projectImages;
