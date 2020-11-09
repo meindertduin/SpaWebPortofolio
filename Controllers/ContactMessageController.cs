@@ -27,7 +27,7 @@ namespace SpaWebPortofolio.Controllers
 
             _appDbContext.SaveChanges();
 
-            return Accepted();
+            return Ok();
         }
     }
 }

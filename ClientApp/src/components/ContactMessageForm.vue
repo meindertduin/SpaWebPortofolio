@@ -10,9 +10,12 @@
             <v-textarea dark outlined counter="2000" label="Bericht" v-model="messageField" :rules="[rules.required, rules.counterMax2000]"></v-textarea>
         </div>
         <div class="text-center">
-            <v-btn dark outlined large>
+            <v-btn v-if="confirmMessage.length <= 0" dark outlined large @click="sendMessage">
                 Verstuur
             </v-btn>
+            <div v-else>
+                {{confirmMessage}}
+            </div>    
         </div>
     </div>
 </template>
@@ -33,6 +36,7 @@
         
         private emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         
+        private confirmMessage :string = "";
         
         private rules = {
             required: value => !!value || 'verplicht veld',
@@ -51,17 +55,22 @@
             if (!this.emailPattern.test(this.emailField)) return;
             
             axios.post("api/contactMessage", {
-                name: this.nameField,
+                name: this.nameField,   
                 email: this.emailField,
                 subject: this.subjectField,
                 message: this.messageField,
             })
                 .then((response) => {
-                    // Tell if sending was succesfull
+                    if (response.status == 200){
+                        this.confirmMessage = "Bericht succesvol verstuurd"
+                    }
+                    else{
+                        this.confirmMessage = "Er ging iets mis tijdens het versturen van het bericht..."
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
-                    // Tell user
+                    this.confirmMessage = "Er ging iets mis tijdens het versturen van het bericht..."
                 })
         }
     }
