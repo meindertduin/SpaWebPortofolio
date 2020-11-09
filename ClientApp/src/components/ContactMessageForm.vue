@@ -24,7 +24,7 @@
     import Vue from 'vue'
     import Component from 'vue-class-component'
     import axios from "axios";
-    import {formRules} from '@/common/objects'
+    import {formRules, emailPattern} from '@/common/objects'
     
     @Component({
         name: "ContactMessageForm",
@@ -35,7 +35,6 @@
         private subjectField : string = "";
         private messageField : string = "";
         
-        private emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         
         private confirmMessage :string = "";
         
@@ -48,7 +47,7 @@
             if (this.emailField.length <= 0 || this.emailField.length > 200) return;
             if (this.subjectField.length <= 0 || this.subjectField.length > 200) return;
             if (this.messageField.length <= 0 || this.messageField.length > 2000) return;
-            if (!this.emailPattern.test(this.emailField)) return;
+            if (!emailPattern.test(this.emailField)) return;
             
             axios.post("api/contactMessage", {
                 name: this.nameField,   
