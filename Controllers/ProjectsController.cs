@@ -34,6 +34,7 @@ namespace SpaWebPortofolio.Controllers
         public IActionResult GetProjects()
         {
             var projects = _appDbContext.Projects
+                .AsNoTracking()
                 .Where(x => x.Deleted == false)
                 .Select(x => new ProjectViewModel()
                 {
@@ -56,9 +57,7 @@ namespace SpaWebPortofolio.Controllers
         [HttpPost("upload")]
         public async Task<IActionResult> Upload(ProjectForm projectForm)
         {
-            var newId = Guid.NewGuid();
-
-                var newProject = new Project()
+            var newProject = new Project()
             {
                 Title = projectForm.Title,
                 Description = projectForm.Description,
@@ -74,19 +73,79 @@ namespace SpaWebPortofolio.Controllers
                 newProject.Images = projectImages;
             }
 
+            _appDbContext.Projects.Add(newProject);
+            _appDbContext.SaveChanges();
+
             return Accepted(newProject);
         }
 
-        [HttpPut("edit/{id}")]
-        public IActionResult Edit(int id, ProjectForm projectForm)
+        [HttpPut("edit/project/{id}")]
+        public IActionResult EditProject(int id, ProjectForm projectForm)
         {
-            return Accepted();
+            var project = _appDbContext
+                .Projects.FirstOrDefault(x => x.Id == id);
+
+            if (project != null)
+            {
+                project.Title = projectForm.Title;
+                project.Description = projectForm.Description;
+                project.GithubLink = projectForm.GithubLink;
+                project.DemoLink = projectForm.DemoLink;
+                project.Features = projectForm.Features;
+                project.DisplaySize = projectForm.DisplaySize;
+                
+                return Accepted();
+            }
+
+            _appDbContext.SaveChanges();
+
+            return NotFound();
         }
 
-        [HttpDelete("delete/{id}")]
-        public IActionResult Delete(int id)
+        [HttpPut("edit/projectImage/{id}")]
+        public async Task<IActionResult> EditImage(int id, IFormFile screenShot)
         {
-            return Accepted();
+            var processedImages = await ConvertImages(new List<IFormFile> {screenShot});
+            var imageToEdit = _appDbContext.ProjectImages.FirstOrDefault(x => x.Id == id);
+
+            if (imageToEdit != null)
+            {
+                imageToEdit.Image = processedImages[0].Image;
+                await _appDbContext.SaveChangesAsync();
+                return Accepted();
+            }
+
+            return NotFound();
+        }
+
+        [HttpDelete("delete/project/{id}")]
+        public IActionResult DeleteProject(int id)
+        {
+            var project = _appDbContext.Projects.FirstOrDefault(x => x.Id == id);
+
+            if (project != null)
+            {
+                _appDbContext.Projects.Remove(project);
+                _appDbContext.SaveChanges();
+                return Accepted();
+            }
+
+            return NotFound();
+        }
+        
+        [HttpDelete("delete/projectImage/{id}")]
+        public IActionResult DeleteImage(int id)
+        {
+            var image = _appDbContext.ProjectImages.FirstOrDefault(x => x.Id == id);
+
+            if (image != null)
+            {
+                _appDbContext.ProjectImages.Remove(image);
+                _appDbContext.SaveChanges();
+                return Accepted();
+            }
+
+            return NotFound();
         }
         
         private async Task<List<ProjectImage>> ConvertImages(List<IFormFile> images)
