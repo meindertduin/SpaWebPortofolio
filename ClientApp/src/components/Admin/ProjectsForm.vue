@@ -89,7 +89,15 @@
             };
             
             axios.post('/api/projects/upload', projectForm)
-                .then((response) => console.log(response))
+                .then((response) => {
+                    if (response.status == 200){
+                        axios.post(`api/projects/upload/screenshot/${response.data.id}`, screenShots, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }).then((response) => console.log(response));
+                    }
+                })
             .catch((err) => console.log(err))
             
         }

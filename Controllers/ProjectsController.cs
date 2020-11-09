@@ -74,10 +74,10 @@ namespace SpaWebPortofolio.Controllers
             return Ok(newProject);
         }
 
-        [HttpPost("upload/screenshot")]
-        public async Task<IActionResult> UploadProjectImages(List<IFormFile> screenShots, int projectId)
+        [HttpPost("upload/screenshot/{id}")]
+        public async Task<IActionResult> UploadProjectImages(List<IFormFile> screenShots, int id)
         {
-            var project = _appDbContext.Projects.FirstOrDefault(x => x.Id == projectId);
+            var project = _appDbContext.Projects.FirstOrDefault(x => x.Id == id);
             
             if (screenShots.Count > 0 && project != null)
             {
