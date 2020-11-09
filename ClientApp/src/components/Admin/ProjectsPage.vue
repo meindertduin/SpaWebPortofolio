@@ -1,6 +1,6 @@
 ﻿<template>
     <v-row justify="center">
-        <v-col cols="8">
+        <v-col class="col-md-11 col-lg-8 col-12">
             <ProjectsForm />
             <AdminProjectsDisplay />
         </v-col>
@@ -10,7 +10,7 @@
 <script lang="ts">
     import Vue from 'vue';
     import Component from "vue-class-component";
-    import ProjectsForm from "./ProjectsForm";
+    import ProjectsForm from "@/components/Admin/ProjectsForm.vue";
     import AdminProjectsDisplay from "./AdminProjectsDisplay";
 
     @Component({

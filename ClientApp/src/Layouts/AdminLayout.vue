@@ -8,7 +8,6 @@
                 <v-tabs align-with-title>
                     <v-tab @click="setPage(0)">Home</v-tab>
                     <v-tab @click="setPage(1)">Projecten</v-tab>
-                    <v-tab @click="setPage(2)">Berichten</v-tab>
                 </v-tabs>
             </template>
         </v-app-bar>

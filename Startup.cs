@@ -30,6 +30,7 @@ namespace SpaWebPortofolio
         {
             services.AddControllersWithViews();
 
+
             services.AddRazorPages();
 
             services.AddTransient<IImageCuttingService, ImageCuttingService>();
@@ -128,6 +129,19 @@ namespace SpaWebPortofolio
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder
+                            .AllowCredentials()
+                            .WithOrigins("https://localhost:5001")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -143,6 +157,8 @@ namespace SpaWebPortofolio
                 app.UseHttpsRedirection();
             }
 
+            app.UseCors("AllowAllOrigins");
+            
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

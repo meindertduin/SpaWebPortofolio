@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SpaWebPortofolio.Controllers;
@@ -7,7 +8,7 @@ namespace SpaWebPortofolio.Data
 {
     public class AppDbContext : IdentityDbContext
     {
-        protected AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             
         }
@@ -16,5 +17,16 @@ namespace SpaWebPortofolio.Data
         public DbSet<ProjectImage> ProjectImages { get; set; }
 
         public DbSet<ContactMessage> ContactMessages { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Project>()
+                .Property(t => t.Features)
+                .HasConversion(
+                    v => string.Join(',', v),
+                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+        }
     }
 }

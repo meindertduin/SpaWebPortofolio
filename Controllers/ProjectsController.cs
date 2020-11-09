@@ -66,18 +66,32 @@ namespace SpaWebPortofolio.Controllers
                 GithubLink = projectForm.Description,
                 Features = projectForm.Features,
             };
-
-            if (projectForm.ScreenShots.Count > 0)
-            {
-                var projectImages = await ConvertImages(projectForm.ScreenShots);
-                newProject.Images = projectImages;
-            }
+            
 
             _appDbContext.Projects.Add(newProject);
             _appDbContext.SaveChanges();
 
-            return Accepted(newProject);
+            return Ok(newProject);
         }
+
+        [HttpPost("upload/screenshot")]
+        public async Task<IActionResult> UploadProjectImages(List<IFormFile> screenShots, int projectId)
+        {
+            var project = _appDbContext.Projects.FirstOrDefault(x => x.Id == projectId);
+            
+            if (screenShots.Count > 0 && project != null)
+            {
+                var projectImages = await ConvertImages(screenShots);
+                project.Images = projectImages;
+
+                _appDbContext.SaveChanges();
+                return Ok();
+            }
+
+            return BadRequest();
+
+        }
+        
 
         [HttpPut("edit/project/{id}")]
         public IActionResult EditProject(int id, ProjectForm projectForm)
