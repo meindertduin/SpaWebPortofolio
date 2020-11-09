@@ -4,12 +4,14 @@
       <v-toolbar-title>
         Meindert van Duin
       </v-toolbar-title>
-      <v-tabs align-with-title>
-        <v-tab @click="scrollToElement(0)">Profiel</v-tab>
-        <v-tab @click="scrollToElement(1)">Evaringen</v-tab>
-        <v-tab @click="scrollToElement(2)">Projecten</v-tab>
-        <v-tab @click="scrollToElement(3)">Contact</v-tab>
-      </v-tabs>
+      <template v-slot:extension>
+        <v-tabs align-with-title>
+          <v-tab @click="scrollToElement(0)">Profiel</v-tab>
+          <v-tab @click="scrollToElement(1)">Evaringen</v-tab>
+          <v-tab @click="scrollToElement(2)">Projecten</v-tab>
+          <v-tab @click="scrollToElement(3)">Contact</v-tab>
+        </v-tabs>
+      </template>
       <v-spacer></v-spacer>
       <v-menu top :close-on-click="true">
         <template v-slot:activator="{ on, attrs }">
@@ -30,7 +32,6 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-
     <v-main>
       <RouterView />
     </v-main>
