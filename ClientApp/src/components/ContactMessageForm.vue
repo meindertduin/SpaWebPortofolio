@@ -4,10 +4,10 @@
             Of laat een berichtje achter
         </div>
         <div class="message-box-fields">
-            <v-text-field dark outlined label="Naam" v-model="nameField" :rules="[rules.required, rules.counterMax200]"></v-text-field>
-            <v-text-field dark outlined label="Email" v-model="emailField" :rules="[rules.required, rules.email]"></v-text-field>
-            <v-text-field dark outlined label="Onderwerp" v-model="subjectField" :rules="[rules.required, rules.counterMax200]"></v-text-field>
-            <v-textarea dark outlined counter="2000" label="Bericht" v-model="messageField" :rules="[rules.required, rules.counterMax2000]"></v-textarea>
+            <v-text-field dark outlined label="Naam" v-model="nameField" :rules="[formRules.required, formRules.counterMax200]"></v-text-field>
+            <v-text-field dark outlined label="Email" v-model="emailField" :rules="[formRules.required, formRules.email]"></v-text-field>
+            <v-text-field dark outlined label="Onderwerp" v-model="subjectField" :rules="[formRules.required, formRules.counterMax200]"></v-text-field>
+            <v-textarea dark outlined counter="2000" label="Bericht" v-model="messageField" :rules="[formRules.required, formRules.counterMax2000]"></v-textarea>
         </div>
         <div class="text-center">
             <v-btn v-if="confirmMessage.length <= 0" dark outlined large @click="sendMessage">
@@ -24,6 +24,7 @@
     import Vue from 'vue'
     import Component from 'vue-class-component'
     import axios from "axios";
+    import {formRules} from '@/common/objects'
     
     @Component({
         name: "ContactMessageForm",
@@ -38,13 +39,8 @@
         
         private confirmMessage :string = "";
         
-        private rules = {
-            required: value => !!value || 'verplicht veld',
-            counterMax200: value => value.length <= 200 || 'Maximaal 200 tekens',
-            counterMax2000: value => value.length <= 2000 || 'Maximaal 2000 tekens',
-            email: value => {
-                return this.emailPattern.test(value) || 'Ongeldig email'
-            },
+        get formRules(){
+            return formRules;
         }
 
         sendMessage():void {
