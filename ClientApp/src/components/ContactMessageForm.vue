@@ -20,6 +20,7 @@
 <script lang="ts">
     import Vue from 'vue'
     import Component from 'vue-class-component'
+    import axios from "axios";
     
     @Component({
         name: "ContactMessageForm",
@@ -49,7 +50,19 @@
             if (this.messageField.length <= 0 || this.messageField.length > 2000) return;
             if (!this.emailPattern.test(this.emailField)) return;
             
-            // send message to backend
+            axios.post("api/contactMessage", {
+                name: this.nameField,
+                email: this.emailField,
+                subject: this.subjectField,
+                message: this.messageField,
+            })
+                .then((response) => {
+                    // Tell if sending was succesfull
+                })
+                .catch((err) => {
+                    console.log(err);
+                    // Tell user
+                })
         }
     }
 </script>
