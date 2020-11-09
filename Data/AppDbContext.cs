@@ -14,5 +14,7 @@ namespace SpaWebPortofolio.Data
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectImage> ProjectImages { get; set; }
+
+        public DbSet<ContactMessage> ContactMessages { get; set; }
     }
 }

@@ -20,8 +20,8 @@ namespace SpaWebPortofolio.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly AppDbContext _appDbContext;
 
-        private const int DISPLAY_IMAGE_HEIGHT = 1920;
-        private const int DISPALY_IMAGE_WIDTH = 1080;
+        private const int DisplayImageHeight = 1920;
+        private const int DisplayImageWidth = 1080;
 
         public ProjectsController(IImageCuttingService imageCuttingService, IWebHostEnvironment env, AppDbContext appDbContext)
         {
@@ -156,8 +156,8 @@ namespace SpaWebPortofolio.Controllers
             {
                 var tempSavePath = Path.Combine(_env.WebRootPath, Path.GetRandomFileName() + ".jpg");
                 
-                var promise = _imageCuttingService.ChangeResolution(screenShot, DISPALY_IMAGE_WIDTH,
-                    DISPLAY_IMAGE_HEIGHT, tempSavePath);
+                var promise = _imageCuttingService.ChangeResolution(screenShot, DisplayImageWidth,
+                    DisplayImageHeight, tempSavePath);
 
                 await promise;
                 
