@@ -6,9 +6,9 @@
             </v-toolbar-title>
             <template v-slot:extension>
                 <v-tabs align-with-title>
-                    <v-tab>Home</v-tab>
-                    <v-tab>Projecten</v-tab>
-                    <v-tab>Berichten</v-tab>
+                    <v-tab @click="setPage(0)">Home</v-tab>
+                    <v-tab @click="setPage(1)">Projecten</v-tab>
+                    <v-tab @click="setPage(2)">Berichten</v-tab>
                 </v-tabs>
             </template>
         </v-app-bar>
@@ -26,7 +26,9 @@
         name: 'AdminLayout',
     })
     export default class DefaultLayout extends Vue {
-    
+        setPage(pageNumber: number):void{
+            this.$store.commit('adminModule/SET_PAGE_NUMBER', pageNumber)
+        }
     }
 </script>
 
