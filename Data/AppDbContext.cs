@@ -5,9 +5,9 @@ using SpaWebPortofolio.Controllers;
 
 namespace SpaWebPortofolio.Data
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : IdentityDbContext
     {
-        protected AppDbContext(DbContextOptions<IdentityDbContext<IdentityUser>> options) : base(options)
+        protected AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             
         }

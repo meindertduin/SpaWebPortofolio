@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SixLabors.ImageSharp;
+using SpaWebPortofolio.Data;
 using SpaWebPortofolio.Interfaces;
 using SpaWebPortofolio.Services;
 using VueCliMiddleware;
@@ -13,8 +16,11 @@ namespace SpaWebPortofolio
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
+            _webHostEnvironment = webHostEnvironment;
             Configuration = configuration;
         }
 
@@ -27,6 +33,96 @@ namespace SpaWebPortofolio
             services.AddRazorPages();
 
             services.AddTransient<IImageCuttingService, ImageCuttingService>();
+
+            services.AddDbContext<AppDbContext>(config =>
+            {
+                config.UseInMemoryDatabase("Dev");
+            });
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+
+                    if (_webHostEnvironment.IsDevelopment())
+                    {
+                        options.Password.RequireDigit = false;
+                        options.Password.RequiredLength = 6;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                    }
+                    else
+                    {
+                        options.Password.RequireDigit = true;
+                        options.Password.RequiredLength = 8;
+                        options.Password.RequireUppercase = true;
+                        options.Password.RequireLowercase = true;
+                        options.Password.RequireNonAlphanumeric = false;
+                    }
+                })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+            
+            var identityServiceBuilder = services.AddIdentityServer();
+            identityServiceBuilder.AddAspNetIdentity<IdentityUser>();
+            
+            
+            if (_webHostEnvironment.IsDevelopment())
+            {
+                identityServiceBuilder.AddConfigurationStore(options =>
+                    {
+                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("Dev");
+                    })
+                    .AddOperationalStore(options =>
+                    {
+                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("Dev");
+                    })
+                    .AddInMemoryIdentityResources(DevelopmentIdentityConfiguration.GetIdentityResources())
+                    .AddInMemoryClients(DevelopmentIdentityConfiguration.GetClients())
+                    .AddInMemoryApiScopes(DevelopmentIdentityConfiguration.GetApiScopes());
+                
+                identityServiceBuilder.AddDeveloperSigningCredential();
+            }
+            
+            services.AddLocalApiAuthentication();
+            
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = "Cookies";
+                    options.DefaultChallengeScheme = "oidc";
+                })
+                .AddCookie("Cookie")
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.SignInScheme = "Cookies";
+
+                    options.Authority = "https://localhost:5001";
+                    options.RequireHttpsMetadata = false;
+                    options.ClientSecret = "secret";
+                    options.ClientId = "mvc";
+
+                    options.ResponseType = "code id_token";
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+
+                    options.Scope.Add("offline_access");
+                    options.Scope.Add("api1");
+                    options.ClaimActions.MapJsonKey("website", "website");
+                });
+            
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = "/Account/Login";
+                config.LogoutPath = "/api/auth/logout";
+            });
+            
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", builder =>
+                {
+                    builder.RequireAuthenticatedUser();
+                });
+            });
 
             services.AddSpaStaticFiles(configuration =>
             {
