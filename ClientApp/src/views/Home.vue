@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-img src="misty-waters.jpg" min-height="900px">
+    <v-img src="misty-waters.jpg" min-height="900px" >
       <v-row class="fill-height ma-6" justify="center" align-content="center">
         <div class="text-center">
           <div class="display-2 font-weight-bold white--text">Welkom bij mijn</div>
@@ -13,7 +13,7 @@
         </div>
       </v-row>
     </v-img>
-    <div class="profile-container">
+    <div class="page-container page-section">
       <v-container>
         <v-row justify="center">
           <v-col class="ma-5 col-10 col-md-6">
@@ -30,12 +30,14 @@
           </v-col>
         </v-row>
       </v-container>
-    </div>
-      <ExperienceCards />
-    <div class="secondary page-container">
+    </div >
+      <div>
+          <ExperienceCards class="experiences page-container page-section" />
+      </div>
+    <div class="secondary page-container page-section">
       <Projects />
     </div>
-    <div class="secondary darken-2 page-container">
+    <div class="secondary darken-2 page-container page-section">
       <Contact />
     </div>
   </div>
