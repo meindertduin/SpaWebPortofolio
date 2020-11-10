@@ -11,7 +11,7 @@
     import Vue from 'vue';
     import Component from "vue-class-component";
     import ProjectsForm from "@/components/Admin/ProjectsForm.vue";
-    import AdminProjectsDisplay from "./AdminProjectsDisplay";
+    import AdminProjectsDisplay from "@/components/Admin/AdminProjectsDisplay.vue";
 
     @Component({
         name: 'ProjectsPage',
