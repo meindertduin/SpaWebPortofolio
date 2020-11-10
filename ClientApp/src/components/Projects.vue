@@ -5,6 +5,8 @@
             <v-col class="col-md-8">
                 <v-row>
                     <v-divider dark class="ma-5"></v-divider>
+                </v-row>
+                <v-row justify="center">
                     <v-col v-for="project in loadedProjects" :key="project.title" :class="`col-lg-${project.displaySize === 0? '6' : '12'}`">
                         <DisplayProject :project="project" />
                     </v-col>

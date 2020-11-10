@@ -40,6 +40,7 @@ namespace SpaWebPortofolio.Controllers
                 {
                     Title = x.Title,
                     Description = x.Description,
+                    DisplaySize = x.DisplaySize,
                     DemoLink = x.DemoLink,
                     GithubLink = x.GithubLink,
                     Features = x.Features,

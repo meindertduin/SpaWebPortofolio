@@ -19,6 +19,7 @@ const actions = <ActionTree<State, any>>{
     axios.get('api/projects')
         .then((response) => {
           commit('SET_LOADED_PROJECTS', response.data);
+          console.log(response.data)
         })
         .catch((err) => console.log(err));
   },

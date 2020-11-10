@@ -87,6 +87,8 @@
                 githubLink: this.githubLinkFormField,
                 demoLink: this.demoLinkFormField,
             };
+
+            console.log(projectForm);
             
             axios.post('/api/projects/upload', projectForm)
                 .then((response) => {
