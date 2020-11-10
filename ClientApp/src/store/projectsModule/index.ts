@@ -18,8 +18,18 @@ const actions = <ActionTree<State, any>>{
   loadProjects({commit}):void{
     axios.get('api/projects')
         .then((response) => {
-          commit('SET_LOADED_PROJECTS', response.data);
-          console.log(response.data)
+            const loadedProjecst : Array<projectModel> = response.data;
+            loadedProjecst.sort((a, b) => {
+                if (a.displaySize > b.displaySize){
+                    return -1;
+                }
+                if (a.displaySize < b.displaySize){
+                    return 1;
+                }
+                
+                return 0;
+            })
+            commit('SET_LOADED_PROJECTS', response.data);
         })
         .catch((err) => console.log(err));
   },

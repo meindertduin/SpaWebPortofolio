@@ -5,6 +5,9 @@
                 <AdminProject :project="project" />
             </v-col>
         </v-row>
+        <v-overlay :value="projectsEditOverlay">
+            <EditProject /> 
+        </v-overlay>
     </div>
 </template>
 
@@ -14,17 +17,22 @@
     import axios from 'axios';
     import {projectModel} from "@/common/types";
     import AdminProject from "@/components/Admin/AdminProject.vue";
-
+    import EditProject from "@/components/Admin/EditProject.vue";
 
     @Component({
         name: 'AdminProjectsDisplay',
         components: {
-            AdminProject
+            AdminProject,
+            EditProject,
         }
     })
     export default class AdminProjectsDisplay extends Vue{
         get loadedProjects():Array<projectModel>{
-            return this.$store.getters['projectsModule/loadedProjects']
+            return this.$store.getters['projectsModule/loadedProjects'];
+        }
+        
+        get projectsEditOverlay(){
+            return this.$store.getters['adminModule/projectsEditOverlay'];    
         }
         
         created(){

@@ -28,7 +28,7 @@
             <v-btn icon v-if="project.githubLink.length > 0" :href="project.githubLink" target="_blank">
                 <v-icon>mdi-github</v-icon>
             </v-btn>
-            <v-btn icon>
+            <v-btn icon @click="openEditOverlay">
                 <v-icon>mdi-cog</v-icon>
             </v-btn>
         </v-card-actions>
@@ -48,8 +48,13 @@
     export default class AdminProject extends Vue{
         @Prop({type: Object, required: true}) readonly project !: projectModel;
 
-        private getFeaturesString(features: string[]){
+        getFeaturesString(features: string[]){
             return concatFeaturesString(features);
+        }
+        
+        openEditOverlay(){
+            this.$store.commit('adminModule/TOGGLE_PROJECTS_EDIT_OVERLAY');
+            this.$store.commit('adminModule/SET_LOADED_EDIT_PROJECT', this.project)
         }
     }
 </script>
