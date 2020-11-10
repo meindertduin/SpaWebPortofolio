@@ -1,13 +1,13 @@
 ﻿<template>
     <div>
         <v-row>
-            <v-col v-for="project in projects" :key="project.title" :class="`col-lg-${project.flex}`">
+            <v-col v-for="project in loadedProjects" :key="project.title" :class="`col-lg-${project.displaySize === 0? '6' : '12'}`">
                 <v-card dark>
                     <v-carousel>
                         <v-carousel-item
-                                v-for="(link,i) in links"
+                                v-for="(image,i) in project.images"
                                 :key="i"
-                                :src="link.src"
+                                :src="`data:image/png;base64,${image.image}`"
                                 reverse-transition="fade-transition"
                                 transition="fade-transition"
                         ></v-carousel-item>
@@ -15,11 +15,11 @@
                     <v-card-title>{{project.title}}</v-card-title>
                     <v-card-text>
                         <div class="project-feature-wrapper">
-                            <div class="project-feature" v-for="x in 5">JAVASCRIPT</div>
+                            <div class="project-feature">{{getFeaturesString(project.features)}}</div>
                         </div>
                         <div class="project-text" :style="`height:${project.flex === 12? 100: 150}px;`">
                             <div>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam, consequatur consequuntur corporis cumque delectus in laudantium non quaerat repellat sapiente sequi soluta sunt, suscipit ut veritatis, voluptates! Ad culpa ea earum est eveniet exercitationem explicabo, fugiat maxime minima nesciunt obcaecati quas quis quos, tempore, vel. Accusamus aliquid animi atque aut beatae cum dignissimos earum facere incidunt itaque laborum libero minus modi molestias non officiis omnis optio perferendis possimus provident quidem, recusandae temporibus totam ut veniam, vero voluptas. Beatae consequatur distinctio ducimus error explicabo nam nulla obcaecati quidem rerum, sapiente tenetur, ullam unde. Aliquid aut illo magnam magni nesciunt vel.
+                                {{project.description}}
                             </div>
                         </div>
                     </v-card-text>
@@ -47,31 +47,38 @@
 <script lang="ts">
     import Vue from 'vue';
     import Component from "vue-class-component";
-    
+    import axios from 'axios';
+    import {projectModel, projectImage} from "@/common/types";
+
+
     @Component({
         name: 'AdminProjectsDisplay',
     })
     export default class AdminProjectsDisplay extends Vue{
-        private projects = [
-            { title: 'Pre-fab homes', src: 'https://cdn.vuetifyjs.com/images/cards/house.jpg', flex: 12 },
-            { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg', flex: 6 },
-            { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 },
-        ];
+        private loadedProjects: Array<projectModel> | null = null; 
+        
+        created(){
+            axios.get('api/projects')
+                .then((response) => {
+                     this.loadedProjects = response.data;
+                })
+            .catch((err) => console.log(err));
+        }
+        
+        private getFeaturesString(features: string[]):string{
+            let featuresString = "";
 
-        private links = [
-            {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-            },
-            {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-            },
-            {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-            },
-            {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-            },
-        ]
+            for (let i = 0; i < features.length; i++){
+                console.log("this")
+                if (i + 1 !== features.length){
+                    featuresString += features[i] + ', ';
+                }
+                else{
+                    featuresString += features[i]
+                }
+            }
+            return featuresString;
+        }
     }
 </script>
 
