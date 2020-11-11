@@ -52,5 +52,7 @@
 </script>
 
 <style scoped>
-
+    .project-text{
+        overflow-y: auto;
+    }
 </style>

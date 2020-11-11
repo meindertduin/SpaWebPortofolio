@@ -1,4 +1,5 @@
 ﻿export interface projectModel {
+    id: number
     title: string,
     description: string,
     displaySize: number,
@@ -9,6 +10,7 @@
 }
 
 export interface projectImage {
+    id: number
     image: any,
     projectId: number
 }

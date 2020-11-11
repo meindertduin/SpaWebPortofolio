@@ -11,12 +11,14 @@
     import Component from "vue-class-component";
     import ProjectsPage from "@/components/Admin/ProjectsPage.vue";
     import AdminHomePage from "@/components/Admin/AdminHomePage.vue";
+    import EditProjectPage from "@/components/Admin/EditProjectPage.vue";
     
     @Component({
         name: 'Admin',
         components: {
             'home-page': AdminHomePage,
             'project-page': ProjectsPage,
+            'edit-project': EditProjectPage
         }
     })
     export default class Admin extends Vue{
@@ -27,7 +29,7 @@
                 case 1:
                     return 'project-page';
                 case 2:
-                    return 'message-page';
+                    return 'edit-project';
                 default:
                     return 'home-page';
             }

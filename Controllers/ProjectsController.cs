@@ -38,6 +38,7 @@ namespace SpaWebPortofolio.Controllers
                 .Where(x => x.Deleted == false)
                 .Select(x => new ProjectViewModel()
                 {
+                    Id = x.Id,
                     Title = x.Title,
                     Description = x.Description,
                     DisplaySize = x.DisplaySize,
@@ -46,6 +47,7 @@ namespace SpaWebPortofolio.Controllers
                     Features = x.Features,
                     Images = x.Images.Select(i => new ProjectImageViewModel()
                     {
+                        Id = i.Id,
                         Image = i.Image,
                         ProjectId = i.ProjectId,
                     }).ToList()
@@ -85,7 +87,7 @@ namespace SpaWebPortofolio.Controllers
                 var projectImages = await ConvertImages(screenShots);
                 project.Images = projectImages;
 
-                _appDbContext.SaveChanges();
+                await _appDbContext.SaveChangesAsync();
                 return Ok();
             }
 
@@ -109,11 +111,10 @@ namespace SpaWebPortofolio.Controllers
                 project.Features = projectForm.Features;
                 project.DisplaySize = projectForm.DisplaySize;
                 
-                return Accepted();
+                _appDbContext.SaveChanges();
+                return Accepted(project);
             }
-
-            _appDbContext.SaveChanges();
-
+            
             return NotFound();
         }
 

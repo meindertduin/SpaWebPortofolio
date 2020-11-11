@@ -5,9 +5,6 @@
                 <AdminProject :project="project" />
             </v-col>
         </v-row>
-        <v-overlay :value="projectsEditOverlay">
-            <EditProject /> 
-        </v-overlay>
     </div>
 </template>
 

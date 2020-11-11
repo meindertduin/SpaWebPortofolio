@@ -28,7 +28,7 @@
             <v-btn icon v-if="project.githubLink.length > 0" :href="project.githubLink" target="_blank">
                 <v-icon>mdi-github</v-icon>
             </v-btn>
-            <v-btn icon @click="openEditOverlay">
+            <v-btn icon @click="openEditPage">
                 <v-icon>mdi-cog</v-icon>
             </v-btn>
         </v-card-actions>
@@ -52,13 +52,15 @@
             return concatFeaturesString(features);
         }
         
-        openEditOverlay(){
-            this.$store.commit('adminModule/TOGGLE_PROJECTS_EDIT_OVERLAY');
-            this.$store.commit('adminModule/SET_LOADED_EDIT_PROJECT', this.project)
+        openEditPage(){
+            this.$store.commit('adminModule/SET_LOADED_EDIT_PROJECT', this.project);
+            this.$store.commit('adminModule/SET_PAGE_NUMBER', 2);
         }
     }
 </script>
 
 <style scoped>
-
+    .project-text{
+        overflow-y: auto;
+    }
 </style>
