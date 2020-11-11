@@ -1,8 +1,9 @@
+const path = require("path");
+
 module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-  devServer: {
-    public: 'localhost:5001'
-  }
+  outputDir: path.resolve(__dirname, "../wwwroot/public"),
+  assetsDir: "../static",
 }
