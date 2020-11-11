@@ -25,7 +25,9 @@
                 <v-list>
                     <v-list-item>
                         <v-list-item-action>
-                            <v-btn @click="openPdf">Open pdf</v-btn>
+                            <v-row justify="center">
+                                <v-btn text @click="openPdf">Open pdf</v-btn>
+                            </v-row>
                         </v-list-item-action>
                     </v-list-item>
                 </v-list>

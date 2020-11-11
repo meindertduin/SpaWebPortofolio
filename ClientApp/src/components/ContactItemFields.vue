@@ -10,7 +10,7 @@
                 <div class="contact-item">
                     <div class="contact-item-icon">
                         <div class="pa-4">
-                            <v-btn text color="white" href="mailto:meindertvanduin99@gmail.com">
+                            <v-btn icon text color="white" href="mailto:meindertvanduin99@gmail.com">
                                 <v-icon x-large>
                                     mdi-email
                                 </v-icon>
@@ -30,7 +30,7 @@
                 <div class="contact-item">
                     <div class="contact-item-icon">
                         <div class="pa-4">
-                            <v-btn text color="white" href="tel:0636399630">
+                            <v-btn icon text color="white" href="tel:0636399630">
                                 <v-icon x-large>
                                     mdi-phone
                                 </v-icon>
@@ -50,7 +50,7 @@
                 <div class="contact-item">
                     <div class="contact-item-icon">
                         <div class="pa-4">
-                            <v-btn text color="white" href="https://github.com/meindertduin" target="_blank">
+                            <v-btn icon color="white" href="https://github.com/meindertduin" target="_blank">
                                 <v-icon x-large>
                                     mdi-github
                                 </v-icon>
