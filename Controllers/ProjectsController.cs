@@ -172,8 +172,8 @@ namespace SpaWebPortofolio.Controllers
             {
                 var tempSavePath = Path.Combine(_env.WebRootPath, Path.GetRandomFileName() + ".jpg");
                 
-                var promise = _imageCuttingService.ChangeResolution(screenShot, DisplayImageWidth,
-                    DisplayImageHeight, tempSavePath);
+                var promise = _imageCuttingService.ChangeResolution(screenShot, DisplayImageHeight, DisplayImageWidth ,
+                    tempSavePath);
 
                 await promise;
                 
