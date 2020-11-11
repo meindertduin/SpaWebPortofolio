@@ -41,7 +41,6 @@ namespace SpaWebPortofolio
                     ClientId = "SpaPortofolioWebClient",
                     AllowedGrantTypes = GrantTypes.Code,
                     
-
                     RedirectUris = new[]
                     {
                         "https://localhost:5001/oidc-callback",
