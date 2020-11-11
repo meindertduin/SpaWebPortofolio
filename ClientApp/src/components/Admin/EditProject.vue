@@ -10,7 +10,7 @@
                         <v-img class="removable-image" height="100px" width="120px" :src="`data:image/png;base64,${image.image}`"></v-img>
                         <v-card-actions>
                             <v-row justify="center">
-                                <v-btn @click="handleDeleteImage(image.id)">Delete</v-btn>
+                                <v-btn text color="red" @click="handleDeleteImage(image.id)">Delete</v-btn>
                             </v-row>
                         </v-card-actions>
                     </v-card>
