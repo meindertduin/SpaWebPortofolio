@@ -36,7 +36,9 @@
     }
   })
   export default class Home extends Vue{
-    
+    created(){
+      console.log("home")
+    }
   }
 </script>
 

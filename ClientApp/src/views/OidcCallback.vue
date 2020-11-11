@@ -1,5 +1,5 @@
 ﻿<template>
-    <div></div>
+    <div>Callback route</div>
 </template>
 
 <script lang="ts">
@@ -16,6 +16,7 @@
         }
 
         created(){
+            console.log("this happens")
             this.oidcSignInCallback()
                 .then((redirectPath) => {
                     location.href = redirectPath;

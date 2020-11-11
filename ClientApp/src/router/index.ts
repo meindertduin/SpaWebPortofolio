@@ -34,6 +34,7 @@ const routes: Array<RouteConfig> = [
     name: 'OidcCallback',
     component: OidcCallback,
     meta: {
+      layout: 'admin-layout',
       isPublic: true,
     }
   },
@@ -42,9 +43,10 @@ const routes: Array<RouteConfig> = [
     name: 'oidcCallbackError',
     component: OidcCallbackError,
     meta: {
+      layout: 'admin-layout',
       isPublic: true,
     }
-  },
+  }
 ]
 
 const router = new VueRouter({
