@@ -1,8 +1,10 @@
 import Vue from 'vue';
+// @ts-ignore
 import Vuetify from 'vuetify/lib';
 
 Vue.use(Vuetify);
 
+// @ts-ignore
 import colors, {Color} from 'vuetify/lib/util/colors'
 
 const secondary : Color = {

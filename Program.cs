@@ -35,6 +35,7 @@ namespace SpaWebPortofolio
                     adminPassword = "password";
                 } 
                 
+                
                 userManager.CreateAsync(admin, adminPassword).GetAwaiter().GetResult();
                 
                 try

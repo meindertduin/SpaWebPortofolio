@@ -64,6 +64,7 @@
         };
         
         get paralexHeight(){
+            // @ts-ignore
             switch (this.$vuetify.breakpoint.name) {
                 case 'xs': return '1000'
                 case 'sm': return '900'

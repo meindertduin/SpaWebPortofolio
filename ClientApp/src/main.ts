@@ -13,6 +13,7 @@ axios.defaults.baseURL=process.env.API_BASE_URL
 new Vue({
   router,
   store,
+  // @ts-ignore
   vuetify,
   render: h => h(App)
 }).$mount('#app')

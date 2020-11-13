@@ -16,6 +16,9 @@
 	<Version>2.5.1</Version>
 	<AssemblyVersion>2.5.1.0</AssemblyVersion>
 	<FileVersion>2.5.1.0</FileVersion>
+	<UserSecretsId>a59a4487-85cb-49a8-a7c8-07ec7c3e8861</UserSecretsId>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +34,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.1" />
     <PackageReference Include="VueCliMiddleware" Version="3.1.1" />
   </ItemGroup>
