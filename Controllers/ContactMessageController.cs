@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Ganss.XSS;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
@@ -40,6 +41,13 @@ namespace SpaWebPortofolio.Controllers
             });
 
             _appDbContext.SaveChanges();
+
+            var sanitizer = new HtmlSanitizer();
+
+            contactMessage.Email = sanitizer.Sanitize(contactMessage.Email);
+            contactMessage.Name = sanitizer.Sanitize(contactMessage.Name);
+            contactMessage.Subject = sanitizer.Sanitize(contactMessage.Subject);
+            contactMessage.Message = sanitizer.Sanitize(contactMessage.Message);
 
             await _mailer.SendEmailAsync("meindertvanduin99@gmail.com", $"Message from {contactMessage.Email}", contactMessage);
 
