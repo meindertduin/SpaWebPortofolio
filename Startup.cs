@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using SpaWebPortofolio.Data;
 using SpaWebPortofolio.Interfaces;
 using SpaWebPortofolio.Services;
-using VueCliMiddleware;
 
 namespace SpaWebPortofolio
 {
@@ -30,6 +28,8 @@ namespace SpaWebPortofolio
         {
             services.AddControllersWithViews();
 
+            services.Configure<MailKitMailSenderOptions>(Configuration.GetSection("SmptHostSettings"));
+            services.AddSingleton<IMailer, Mailer>();
 
             services.AddRazorPages();
 
