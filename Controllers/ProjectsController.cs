@@ -18,22 +18,22 @@ namespace SpaWebPortofolio.Controllers
     {
         private readonly IImageCuttingService _imageCuttingService;
         private readonly IWebHostEnvironment _env;
-        private readonly AppDbContext _appDbContext;
+        private readonly ApplicationDbContext _applicationDbContext;
 
         private const int DisplayImageHeight = 1920;
         private const int DisplayImageWidth = 1080;
 
-        public ProjectsController(IImageCuttingService imageCuttingService, IWebHostEnvironment env, AppDbContext appDbContext)
+        public ProjectsController(IImageCuttingService imageCuttingService, IWebHostEnvironment env, ApplicationDbContext applicationDbContext)
         {
             _imageCuttingService = imageCuttingService;
             _env = env;
-            _appDbContext = appDbContext;
+            _applicationDbContext = applicationDbContext;
         }
 
         [HttpGet]
         public IActionResult GetProjects()
         {
-            var projects = _appDbContext.Projects
+            var projects = _applicationDbContext.Projects
                 .AsNoTracking()
                 .Where(x => x.Deleted == false)
                 .Select(x => new ProjectViewModel()
@@ -71,8 +71,8 @@ namespace SpaWebPortofolio.Controllers
             };
             
 
-            _appDbContext.Projects.Add(newProject);
-            _appDbContext.SaveChanges();
+            _applicationDbContext.Projects.Add(newProject);
+            _applicationDbContext.SaveChanges();
 
             return Ok(newProject);
         }
@@ -80,14 +80,14 @@ namespace SpaWebPortofolio.Controllers
         [HttpPost("upload/screenshot/{id}")]
         public async Task<IActionResult> UploadProjectImages(List<IFormFile> screenShots, int id)
         {
-            var project = _appDbContext.Projects.FirstOrDefault(x => x.Id == id);
+            var project = _applicationDbContext.Projects.FirstOrDefault(x => x.Id == id);
             
             if (screenShots.Count > 0 && project != null)
             {
                 var projectImages = await ConvertImages(screenShots);
                 project.Images = projectImages;
 
-                await _appDbContext.SaveChangesAsync();
+                await _applicationDbContext.SaveChangesAsync();
                 return Ok();
             }
 
@@ -99,7 +99,7 @@ namespace SpaWebPortofolio.Controllers
         [HttpPut("edit/project/{id}")]
         public IActionResult EditProject(int id, ProjectForm projectForm)
         {
-            var project = _appDbContext
+            var project = _applicationDbContext
                 .Projects.FirstOrDefault(x => x.Id == id);
 
             if (project != null)
@@ -111,7 +111,7 @@ namespace SpaWebPortofolio.Controllers
                 project.Features = projectForm.Features;
                 project.DisplaySize = projectForm.DisplaySize;
                 
-                _appDbContext.SaveChanges();
+                _applicationDbContext.SaveChanges();
                 return Accepted(project);
             }
             
@@ -122,12 +122,12 @@ namespace SpaWebPortofolio.Controllers
         public async Task<IActionResult> EditImage(int id, IFormFile screenShot)
         {
             var processedImages = await ConvertImages(new List<IFormFile> {screenShot});
-            var imageToEdit = _appDbContext.ProjectImages.FirstOrDefault(x => x.Id == id);
+            var imageToEdit = _applicationDbContext.ProjectImages.FirstOrDefault(x => x.Id == id);
 
             if (imageToEdit != null)
             {
                 imageToEdit.Image = processedImages[0].Image;
-                await _appDbContext.SaveChangesAsync();
+                await _applicationDbContext.SaveChangesAsync();
                 return Accepted();
             }
 
@@ -137,12 +137,12 @@ namespace SpaWebPortofolio.Controllers
         [HttpDelete("delete/project/{id}")]
         public IActionResult DeleteProject(int id)
         {
-            var project = _appDbContext.Projects.FirstOrDefault(x => x.Id == id);
+            var project = _applicationDbContext.Projects.FirstOrDefault(x => x.Id == id);
 
             if (project != null)
             {
-                _appDbContext.Projects.Remove(project);
-                _appDbContext.SaveChanges();
+                _applicationDbContext.Projects.Remove(project);
+                _applicationDbContext.SaveChanges();
                 return Accepted();
             }
 
@@ -152,12 +152,12 @@ namespace SpaWebPortofolio.Controllers
         [HttpDelete("delete/projectImage/{id}")]
         public IActionResult DeleteImage(int id)
         {
-            var image = _appDbContext.ProjectImages.FirstOrDefault(x => x.Id == id);
+            var image = _applicationDbContext.ProjectImages.FirstOrDefault(x => x.Id == id);
 
             if (image != null)
             {
-                _appDbContext.ProjectImages.Remove(image);
-                _appDbContext.SaveChanges();
+                _applicationDbContext.ProjectImages.Remove(image);
+                _applicationDbContext.SaveChanges();
                 return Accepted();
             }
 

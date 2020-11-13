@@ -16,15 +16,15 @@ namespace SpaWebPortofolio.Controllers
     [Route("api/contactMessage")]
     public class ContactMessageController : ControllerBase
     {
-        private readonly IMailer _mailer;
+        private readonly IMailerService _mailerService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly AppDbContext _appDbContext;
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        public ContactMessageController(AppDbContext appDbContext, IMailer mailer, IWebHostEnvironment webHostEnvironment)
+        public ContactMessageController(ApplicationDbContext applicationDbContext, IMailerService mailerService, IWebHostEnvironment webHostEnvironment)
         {
-            _mailer = mailer;
+            _mailerService = mailerService;
             _webHostEnvironment = webHostEnvironment;
-            _appDbContext = appDbContext;
+            _applicationDbContext = applicationDbContext;
 
         }
 
@@ -32,7 +32,7 @@ namespace SpaWebPortofolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload([FromBody] ContactMessageForm contactMessage)
         {
-            _appDbContext.ContactMessages.Add(new ContactMessage()
+            _applicationDbContext.ContactMessages.Add(new ContactMessage()
             {
                 Name = contactMessage.Name,
                 Subject = contactMessage.Subject,
@@ -40,7 +40,7 @@ namespace SpaWebPortofolio.Controllers
                 Email = contactMessage.Email,
             });
 
-            _appDbContext.SaveChanges();
+            _applicationDbContext.SaveChanges();
 
             var sanitizer = new HtmlSanitizer();
 
@@ -49,7 +49,7 @@ namespace SpaWebPortofolio.Controllers
             contactMessage.Subject = sanitizer.Sanitize(contactMessage.Subject);
             contactMessage.Message = sanitizer.Sanitize(contactMessage.Message);
 
-            await _mailer.SendEmailAsync("meindertvanduin99@gmail.com", $"Message from {contactMessage.Email}", contactMessage);
+            await _mailerService.SendEmailAsync("meindertvanduin99@gmail.com", $"Message from {contactMessage.Email}", contactMessage);
 
             return Ok();
         }

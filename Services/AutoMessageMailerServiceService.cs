@@ -10,12 +10,12 @@ using SpaWebPortofolio.Controllers;
 
 namespace SpaWebPortofolio.Services
 {
-    public class Mailer : IMailer
+    public class AutoMessageMailerServiceService : IMailerService
     {
         private readonly MailKitMailSenderOptions _smptSettings;
         private readonly IWebHostEnvironment _environment;
 
-        public Mailer(IOptions<MailKitMailSenderOptions> smptSettings, IWebHostEnvironment environment)
+        public AutoMessageMailerServiceService(IOptions<MailKitMailSenderOptions> smptSettings, IWebHostEnvironment environment)
         {
             _smptSettings = smptSettings.Value;
             _environment = environment;

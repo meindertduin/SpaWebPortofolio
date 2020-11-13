@@ -29,15 +29,35 @@ namespace SpaWebPortofolio
             services.AddControllersWithViews();
 
             services.Configure<MailKitMailSenderOptions>(Configuration.GetSection("SmptHostSettings"));
-            services.AddSingleton<IMailer, Mailer>();
+            services.AddSingleton<IMailerService, AutoMessageMailerServiceService>();
 
             services.AddRazorPages();
 
             services.AddTransient<IImageCuttingService, ImageCuttingService>();
 
-            services.AddDbContext<AppDbContext>(config =>
+            services.AddDbContext<ApplicationDbContext>(config =>
             {
-                config.UseInMemoryDatabase("Dev");
+                if (_webHostEnvironment.IsDevelopment())
+                {
+                    services.AddDbContext<ApplicationDbContext>(config =>
+                    {
+                        config.UseInMemoryDatabase("Dev");
+                    });
+                }
+                else
+                {
+                    var conn = Configuration["ServerConnectionString"];
+                    config.UseSqlServer(conn, b =>
+                    {
+                        b.MigrationsAssembly("SpaWebPortofolio");
+                    });
+                }
+            });
+            
+            // identity db context
+            services.AddDbContext<IdentityUserDbContext>(builder =>
+            {
+                builder.UseInMemoryDatabase("IdentityDb");
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -61,7 +81,7 @@ namespace SpaWebPortofolio
                         options.Password.RequireNonAlphanumeric = false;
                     }
                 })
-                .AddEntityFrameworkStores<AppDbContext>()
+                .AddEntityFrameworkStores<IdentityUserDbContext>()
                 .AddDefaultTokenProviders();
             
             var identityServiceBuilder = services.AddIdentityServer();
@@ -72,11 +92,11 @@ namespace SpaWebPortofolio
             {
                 identityServiceBuilder.AddConfigurationStore(options =>
                     {
-                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("Dev");
+                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
                     })
                     .AddOperationalStore(options =>
                     {
-                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("Dev");
+                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
                     })
                     .AddInMemoryIdentityResources(DevelopmentIdentityConfiguration.GetIdentityResources())
                     .AddInMemoryClients(DevelopmentIdentityConfiguration.GetClients())
