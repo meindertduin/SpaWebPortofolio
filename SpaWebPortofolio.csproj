@@ -54,30 +54,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\plugins\axios.ts" />
+    <None Remove="ClientApp\src\plugins\vuetify.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="ClientApp\tsconfig.json" />
   </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="client-app\package-lock.json" />
-    <_ContentIncludedByDefault Remove="client-app\package.json" />
-    <_ContentIncludedByDefault Remove="client-app\tsconfig.json" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\css\app.08c15f1e.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\css\chunk-vendors.bde6f958.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\js\app.a25fb8fb.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\js\app.a25fb8fb.js.map" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\js\chunk-vendors.9cd0a70c.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\js\chunk-vendors.9cd0a70c.js.map" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\js\app.575341bf.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\static\js\app.575341bf.js.map" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <Folder Include="Attributes" />
     <Folder Include="ClientApp\src\components\Common" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\plugins\vuetify.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -39,23 +39,18 @@ namespace SpaWebPortofolio
 
             services.AddDbContext<ApplicationDbContext>(config =>
             {
-                // if (_webHostEnvironment.IsDevelopment())
-                // {
-                //     services.AddDbContext<ApplicationDbContext>(config =>
-                //     {
-                //         config.UseInMemoryDatabase("Dev");
-                //     });
-                // }
-                // else
-                // {
-                //     
-                // }
-
-                var conn = Configuration["ConnectionStrings:SpaDatabase"];
-                config.UseSqlServer(conn, b =>
+                if (_webHostEnvironment.IsDevelopment())
                 {
-                    b.MigrationsAssembly("SpaWebPortofolio");
-                });
+                    config.UseInMemoryDatabase("Dev");
+                }
+                else
+                {
+                    var conn = Configuration["ConnectionStrings:SpaDatabase"];
+                    config.UseSqlServer(conn, b =>
+                    {
+                        b.MigrationsAssembly("SpaWebPortofolio");
+                    });
+                }
             });
             
             // identity db context
@@ -92,22 +87,19 @@ namespace SpaWebPortofolio
             identityServiceBuilder.AddAspNetIdentity<IdentityUser>();
             
             
-            if (_webHostEnvironment.IsDevelopment())
-            {
-                identityServiceBuilder.AddConfigurationStore(options =>
-                    {
-                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
-                    })
-                    .AddOperationalStore(options =>
-                    {
-                        options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
-                    })
-                    .AddInMemoryIdentityResources(DevelopmentIdentityConfiguration.GetIdentityResources())
-                    .AddInMemoryClients(DevelopmentIdentityConfiguration.GetClients())
-                    .AddInMemoryApiScopes(DevelopmentIdentityConfiguration.GetApiScopes());
+            identityServiceBuilder.AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
+                })
+                .AddInMemoryIdentityResources(DevelopmentIdentityConfiguration.GetIdentityResources())
+                .AddInMemoryClients(DevelopmentIdentityConfiguration.GetClients())
+                .AddInMemoryApiScopes(DevelopmentIdentityConfiguration.GetApiScopes());
                 
-                identityServiceBuilder.AddDeveloperSigningCredential();
-            }
+            identityServiceBuilder.AddDeveloperSigningCredential();
             
             services.AddLocalApiAuthentication();
             
@@ -151,8 +143,8 @@ namespace SpaWebPortofolio
 
             services.AddSpaStaticFiles(configuration =>
             {
-                // configuration.RootPath = "ClientApp/dist";
-                configuration.RootPath = "/public/";
+                configuration.RootPath = "ClientApp/dist";
+                //configuration.RootPath = "/public/";
             });
             
             services.AddCors(options =>
@@ -186,6 +178,8 @@ namespace SpaWebPortofolio
             
             app.UseStaticFiles();
 
+            app.UseSpaStaticFiles();
+            
             app.UseRouting();
             
             app.UseAuthentication();
@@ -207,11 +201,6 @@ namespace SpaWebPortofolio
                         new SpaOptions { SourcePath = "ClientApp" },
                         npmScript: "serve",
                         regex: "Compiled successfully");
-                }
-                else
-                {
-                    //endpoints.MapFallbackToFile("/public/index.html");
-                    app.UseSpaStaticFiles();
                 }
 
                 endpoints.MapRazorPages();

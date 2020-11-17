@@ -1,5 +1,5 @@
 ﻿<template>
-    <v-img src="misty-waters.jpg" min-height="900px" >
+    <v-img src="files/misty-waters.jpg" min-height="900px" >
         <v-row class="fill-height ma-6" justify="center" align-content="center">
             <div class="text-center">
                 <div class="display-2 font-weight-bold white--text">Welkom bij mijn</div>

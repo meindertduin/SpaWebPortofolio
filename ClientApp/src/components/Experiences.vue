@@ -1,5 +1,5 @@
 ﻿<template>
-    <v-parallax src="misty-forest.jpg" :height="paralexHeight">
+    <v-parallax src="files/misty-forest.jpg" :height="paralexHeight">
         <v-container>
             <v-row justify="center" v-if="paralexHeight < 1000">
                 <div class="my-5 display-2 font-weight-bold text-center">

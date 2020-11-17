@@ -27,7 +27,6 @@ namespace SpaWebPortofolio.Controllers
             _applicationDbContext = applicationDbContext;
 
         }
-
         
         [HttpPost]
         public async Task<IActionResult> Upload([FromBody] ContactMessageForm contactMessage)

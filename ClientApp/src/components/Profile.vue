@@ -4,7 +4,7 @@
             <v-col class="ma-5 col-10 col-md-6">
                 <div class="text-center">
                     <v-avatar class="ma-5"  size="200">
-                        <v-img src="profileavatar.jpeg"></v-img>
+                        <v-img src="files/profileavatar.jpeg"></v-img>
                     </v-avatar>
                     <div class="display-1 font-weight-bold mt-5">Ikke in het kort</div>
                     <div style="margin-top: 2em; margin-bottom: 1em">

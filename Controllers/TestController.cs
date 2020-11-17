@@ -3,13 +3,12 @@
 namespace SpaWebPortofolio.Controllers
 {
     [ApiController]
-    [Route("api/tests")]
+    [Route("api/test")]
     public class TestController : ControllerBase
     {
-        [HttpGet]
-        public string Test()
+        public IActionResult Get()
         {
-            return "works";
+            return Ok("test");
         }
     }
 }

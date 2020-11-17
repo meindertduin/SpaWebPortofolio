@@ -1,7 +1,7 @@
 ﻿<template>
     <div>
         <v-card color="secondary">
-            <v-img class="text--white" src="laptop.jpg" max-height="200px">
+            <v-img class="text--white" src="files/laptop.jpg" max-height="200px">
                 <v-card-title class="white--text">
                     <div class="display-2 align-center">Voeg een project toe</div>
                 </v-card-title>

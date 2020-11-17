@@ -2,7 +2,7 @@
     <v-row justify="center">
         <v-col class="col-md-10 col-lg-8 col-sm-11 col-12">
             <v-card>
-                <v-img src="admin-logo.png" max-height="500px">
+                <v-img src="files/admin-logo.png" max-height="500px">
                     <v-card-title>
                         <div class="text-center display-2">Wekom op de admin pagina</div>
                     </v-card-title>
