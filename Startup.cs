@@ -39,21 +39,23 @@ namespace SpaWebPortofolio
 
             services.AddDbContext<ApplicationDbContext>(config =>
             {
-                if (_webHostEnvironment.IsDevelopment())
+                // if (_webHostEnvironment.IsDevelopment())
+                // {
+                //     services.AddDbContext<ApplicationDbContext>(config =>
+                //     {
+                //         config.UseInMemoryDatabase("Dev");
+                //     });
+                // }
+                // else
+                // {
+                //     
+                // }
+
+                var conn = Configuration["ConnectionStrings:SpaDatabase"];
+                config.UseSqlServer(conn, b =>
                 {
-                    services.AddDbContext<ApplicationDbContext>(config =>
-                    {
-                        config.UseInMemoryDatabase("Dev");
-                    });
-                }
-                else
-                {
-                    var conn = Configuration["ServerConnectionString"];
-                    config.UseSqlServer(conn, b =>
-                    {
-                        b.MigrationsAssembly("SpaWebPortofolio");
-                    });
-                }
+                    b.MigrationsAssembly("SpaWebPortofolio");
+                });
             });
             
             // identity db context
@@ -183,7 +185,6 @@ namespace SpaWebPortofolio
             app.UseCors("AllowAllOrigins");
             
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
 
             app.UseRouting();
             
@@ -209,7 +210,8 @@ namespace SpaWebPortofolio
                 }
                 else
                 {
-                    endpoints.MapFallbackToFile("/public/index.html");
+                    //endpoints.MapFallbackToFile("/public/index.html");
+                    app.UseSpaStaticFiles();
                 }
 
                 endpoints.MapRazorPages();

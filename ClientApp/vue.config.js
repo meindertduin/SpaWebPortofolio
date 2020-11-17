@@ -4,6 +4,6 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-  outputDir: path.resolve(__dirname, "../wwwroot/public"),
-  assetsDir: "../static",
+  // outputDir: path.resolve(__dirname, "../wwwroot/public"),
+  // assetsDir: "../static",
 }

@@ -7,9 +7,16 @@
                         <v-img src="profileavatar.jpeg"></v-img>
                     </v-avatar>
                     <div class="display-1 font-weight-bold mt-5">Ikke in het kort</div>
-                    <div style="margin-top: 2em; margin-bottom: 4em">
-                        Vuetify is the #1 component library for Vue.js and has been in active development since 2016. The goal of the project is to provide users with everything that is needed to build rich and engaging web applications using the Material Design specification. It accomplishes that with a consistent update cycle, Long-term Support (LTS) for previous versions,
-                        responsive community engagement, a vast ecosystem of resources and a dedication to quality components.
+                    <div style="margin-top: 2em; margin-bottom: 1em">
+                        <div class="ma-2">
+                            Mijn naam is Meindert, ben 21 jaar en programmeer al een tijdje graag websites en andere projecten.
+                            In de afgelopen maanden heb ik al een aantal projecten achter de kiezen die ik van begin af aan tot aan hosten toe uitgevoerd heb 
+                            en heb ik hier veel evaring mee opgedaan. Ik voel me vrij zeker over mijn vaardigheden en ben daarom dus opzoek naar een baan
+                            waarmee ik verder kan groeien.
+                        </div>
+                        <div class="ma-2">
+                            Zo ben ik opzoek naar een baan waarmee ik mijn voet in de wereld van profesioneel fullstack development kan zetten.
+                        </div>                        
                     </div>
                 </div>
             </v-col>

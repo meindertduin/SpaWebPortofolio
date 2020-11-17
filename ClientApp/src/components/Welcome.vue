@@ -3,7 +3,7 @@
         <v-row class="fill-height ma-6" justify="center" align-content="center">
             <div class="text-center">
                 <div class="display-2 font-weight-bold white--text">Welkom bij mijn</div>
-                <div class="display-3 font-weight-bold white--text">Portofolio</div>
+                <div class="display-3 font-weight-bold white--text">Web-Portofolio</div>
                 <v-btn class="ma-5" fab dark large @click="scrollToProfile">
                     <v-icon dark>
                         mdi-chevron-double-down
