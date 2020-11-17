@@ -22,9 +22,11 @@ namespace SpaWebPortofolio
         {
             _webHostEnvironment = webHostEnvironment;
             Configuration = configuration;
+            StaticConfig = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; private set; }
+        public static IConfiguration StaticConfig { get; private set; }
 
         public void ConfigureServices(IServiceCollection services)
         {

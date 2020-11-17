@@ -37,7 +37,7 @@
   })
   export default class Home extends Vue{
     created(){
-      console.log("home")
+      console.log(process.env.VUE_APP_CLIENT_SECRET);
     }
   }
 </script>

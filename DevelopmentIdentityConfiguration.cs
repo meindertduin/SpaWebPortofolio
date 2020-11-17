@@ -40,6 +40,7 @@ namespace SpaWebPortofolio
                 {
                     ClientId = "SpaPortofolioWebClient",
                     AllowedGrantTypes = GrantTypes.Code,
+                    ClientSecrets = new List<Secret>(){new Secret(Startup.StaticConfig["ClientSecret"]??"secret".Sha256())},
                     
                     RedirectUris = new[]
                     {

@@ -33,6 +33,7 @@ namespace SpaWebPortofolio.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetProjects()
         {
             var projects = _applicationDbContext.Projects
