@@ -10,10 +10,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        displaySize: 0 as number,
     },
     mutations: {
+        SET_DISPLAY_SIZE: (state, size:number) => state.displaySize = size,
+    },
+    getters: {
+        getDisplaySize: state => state.displaySize,  
     },
     actions: {
+        
     },
     modules: {
         adminModule: AdminModule,

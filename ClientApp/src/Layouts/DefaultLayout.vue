@@ -1,7 +1,7 @@
 ﻿<template>
     <v-app>
         <v-app-bar app color="primary" dark>
-            <v-row v-if="height < 500" align-content="center">
+            <v-row v-if="displaySize < 500" align-content="center">
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -113,14 +113,8 @@
         name: 'DefaultLayout',
     })
     export default class DefaultLayout extends Vue{
-        get height(){
-            switch (this.$vuetify.breakpoint.name) {
-                case 'xs': return 220
-                case 'sm': return 400
-                case 'md': return 500
-                case 'lg': return 600
-                case 'xl': return 800
-            }
+        get displaySize(){
+            return this.$store.getters.getDisplaySize;
         }
         
         scrollToElement(index:number):void {

@@ -1,5 +1,5 @@
 ﻿<template>
-    <v-img src="files/misty-waters.jpg" min-height="900px" >
+    <v-img src="files/misty-waters.jpg" :max-height="`${welcomeImageSize}px`" >
         <v-row class="fill-height ma-6" justify="center" align-content="center">
             <div class="text-center">
                 <div class="welcome-text">Web-Portfolio</div>
@@ -22,6 +22,17 @@
         name: 'Welcome',
     })
     export default class Welcome extends Vue{
+        get displaySize(){
+            console.log(this.$store.getters.getDisplaySize)
+            return this.$store.getters.getDisplaySize;
+        }
+        
+        get welcomeImageSize(){
+            if (this.displaySize <= 500) return 920;
+            if (this.displaySize <= 400) return 800;
+            if (this.displaySize <= 220) return 500;
+        }
+        
         scrollToProfile(){
             const yOffset = -80;
             const element = document.getElementsByClassName('page-section')[0];
