@@ -6,16 +6,17 @@
                     <v-avatar class="ma-5"  size="200">
                         <v-img src="files/profileavatar.jpeg"></v-img>
                     </v-avatar>
-                    <div class="display-1 font-weight-bold mt-5">Ikke in het kort</div>
+                    <div class="display-1 font-weight-bold mt-5">Ikke in 't kort</div>
                     <div style="margin-top: 2em; margin-bottom: 1em">
                         <div class="ma-2">
-                            Mijn naam is Meindert, ben 21 jaar en programmeer al een tijdje graag websites en andere projecten.
-                            In de afgelopen maanden heb ik al een aantal projecten achter de kiezen die ik van begin af aan tot aan hosten toe uitgevoerd heb 
-                            en heb ik hier veel evaring mee opgedaan. Ik voel me vrij zeker over mijn vaardigheden en ben daarom dus opzoek naar een baan
-                            waarmee ik verder kan groeien.
+                            Ik ben Meindert, 21 jaar en programmeer al een tijdje met veel plezier websites en andere projecten/
+                            In de afgelopen maanden heb ik al een aantal projecten uitgevoerd waarbij ik vanaf het begin tot aan het hosten aan toe alle touwtjes in handen mee had.
+                            Hiermee heb ik dan ook zeker veel ervaring mee opgedaan. Ik voel me vrij zeker over mijn vaardigheden en daarom ben ik dus opzoek naar een baan waamee
+                            ik mezelf nog verder kan ontwikkelen. Natuurlijk wil ik doorgroeien in dit vakgebied! 
                         </div>
                         <div class="ma-2">
-                            Zo ben ik opzoek naar een baan waarmee ik mijn voet in de wereld van profesioneel fullstack development kan zetten.
+                            Ik ben dus opzoek naar een baan waarmee ik mijn
+                            voetdruk in de wereld van proffesioneel fullstack development kan zetten.
                         </div>                        
                     </div>
                 </div>

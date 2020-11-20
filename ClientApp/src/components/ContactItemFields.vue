@@ -4,7 +4,8 @@
             <div>
                 <div class="text--white display-2">Meindert van Duin</div>
                 <div class="my-4 text-h6">Fullstack programmeur</div>
-                <div class="my-4 text-body-2">Ik hoop doormiddel van mijn portofolio mijn vaardigheden heb kunnen laten zien en kom graag in contact.</div>
+                <div class="my-4 text-body-2">Ik hoop doormiddel van mijn portofolio ik mijn vaardigheden heb kunnen laten zien.
+                    Ik kom al te graag in contact!</div>
             </div>
             <div class="contact-items-container">
                 <div class="contact-item">
