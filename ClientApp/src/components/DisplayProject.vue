@@ -12,7 +12,7 @@
         <v-card-title>{{project.title}}</v-card-title>
         <v-card-text>
             <div class="project-feature-wrapper">
-                <div class="project-feature">{{getFeaturesString(project.features)}}</div>
+                <div class="mb-2 project-feature orange--text">{{getFeaturesString(project.features)}}</div>
             </div>
             <div class="project-text" :style="`height:${project.displaySize === 0? 100: 150}px;`">
                 <div>
