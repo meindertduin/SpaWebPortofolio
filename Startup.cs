@@ -45,7 +45,12 @@ namespace SpaWebPortofolio
             {
                 if (_webHostEnvironment.IsDevelopment())
                 {
-                    config.UseInMemoryDatabase("Dev");
+                    // config.UseInMemoryDatabase("Dev");
+                    var conn = Configuration["ConnectionStrings:SpaDatabase"];
+                    config.UseSqlServer(conn, b =>
+                    {
+                        b.MigrationsAssembly("SpaWebPortofolio");
+                    });
                 }
                 else
                 {

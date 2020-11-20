@@ -8,29 +8,31 @@
             </v-row>
             <v-row justify="center" class="my-5">
                 <v-col class="col-8 col-md-3 col-xl-2 col-sm-6" v-for="(category, categoryIndex) in experiences" :key="categoryIndex">
-                    <v-card height="300px" width="250px">
-                        <v-card-text>
-                            <v-row justify="center">
-                                <v-icon x-large color="primary" class="ma-5">
-                                    {{category.icon}}
-                                </v-icon>
-                            </v-row>
-                            <v-row justify="center">
-                                <div class="font-weight-bold text-center text-h4 ma-3" style="color: black">
-                                    {{category.title}}
-                                </div>
-                            </v-row>
-                            <v-row justify="center">
-                                <div class="font-weight-bold">
-                                    <ul>
-                                        <li v-for="(item, index) in category.items" :key="index">
-                                            {{item}}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </v-row>
-                        </v-card-text>
-                    </v-card>
+                    <v-hover v-slot="{ hover }">
+                        <v-card height="300px" width="250px" :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
+                            <v-card-text>
+                                <v-row justify="center">
+                                    <v-icon x-large color="primary" class="ma-5">
+                                        {{category.icon}}
+                                    </v-icon>
+                                </v-row>
+                                <v-row justify="center">
+                                    <div class="font-weight-bold text-center text-h4 ma-3" style="color: black">
+                                        {{category.title}}
+                                    </div>
+                                </v-row>
+                                <v-row justify="center">
+                                    <div class="font-weight-bold">
+                                        <ul>
+                                            <li v-for="(item, index) in category.items" :key="index">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </v-row>
+                            </v-card-text>
+                        </v-card>
+                    </v-hover>
                 </v-col>
             </v-row>
         </v-container>
@@ -78,5 +80,15 @@
 </script>
 
 <style scoped>
+    .v-card {
+        transition: opacity .2s ease-in-out;
+    }
 
+    .v-card:not(.on-hover) {
+        opacity: 0.8;
+    }
+
+    .show-btns {
+        color: rgba(255, 255, 255, 1) !important;
+    }
 </style>

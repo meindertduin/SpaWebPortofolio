@@ -1,37 +1,103 @@
 ﻿<template>
     <v-app>
         <v-app-bar app color="primary" dark>
-            <v-toolbar-title>
-                Meindert van Duin
-            </v-toolbar-title>
-            <template v-slot:extension>
-                <v-tabs align-with-title>
-                    <v-tab @click="scrollToElement(0)">Profiel</v-tab>
-                    <v-tab @click="scrollToElement(1)">Evaringen</v-tab>
-                    <v-tab @click="scrollToElement(2)">Projecten</v-tab>
-                    <v-tab @click="scrollToElement(3)">Contact</v-tab>
-                </v-tabs>
-            </template>
-            <v-spacer></v-spacer>
-            <v-menu top :close-on-click="true">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" dark v-bind="attrs" v-on="on" depressed>
-                        CV
-                        <v-icon>
-                            mdi-paperclip
-                        </v-icon>
-                    </v-btn>
-                </template>
-                <v-list>
-                    <v-list-item>
-                        <v-list-item-action>
-                            <v-row justify="center">
-                                <v-btn text @click="openPdf">Open pdf</v-btn>
-                            </v-row>
-                        </v-list-item-action>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
+            <v-row v-if="height < 500" align-content="center">
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                                color="primary"
+                                v-bind="attrs"
+                                v-on="on"
+                                icon
+                        >
+                            <v-icon color="white">mdi-menu</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item>
+                            <v-list-item-action>
+                                <v-btn class="mx-1" text @click="scrollToElement(0)">Profiel</v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-action>
+                                <v-btn class="mx-1" text @click="scrollToElement(1)">Evaringen</v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-action>
+                                <v-btn class="mx-1" text @click="scrollToElement(2)">Projecten</v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-action>
+                                <v-btn class="mx-1" text @click="scrollToElement(3)">Contact</v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-action>
+                                <v-btn text @click="openPdf">CV pdf</v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+                <v-toolbar-title class="ma-2">
+                    Meindert van Duin
+                </v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+                <v-menu top :close-on-click="true" class="ma-2">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="primary" dark v-bind="attrs" v-on="on" depressed>
+                            CV
+                            <v-icon>
+                                mdi-paperclip
+                            </v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item>
+                            <v-list-item-action>
+                                <v-row justify="center">
+                                    <v-btn text @click="openPdf">Open pdf</v-btn>
+                                </v-row>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </v-row>
+            <v-row v-else>
+                <v-toolbar-title>
+                    Meindert van Duin
+                </v-toolbar-title>
+                <v-btn class="ml-4 mr-1" text @click="scrollToElement(0)">Profiel</v-btn>
+                <v-btn class="mx-1" text @click="scrollToElement(1)">Evaringen</v-btn>
+                <v-btn class="mx-1" text @click="scrollToElement(2)">Projecten</v-btn>
+                <v-btn class="mx-1" text @click="scrollToElement(3)">Contact</v-btn>
+
+                <v-spacer></v-spacer>
+
+                <v-menu top :close-on-click="true">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="primary" dark v-bind="attrs" v-on="on" depressed>
+                            CV
+                            <v-icon>
+                                mdi-paperclip
+                            </v-icon>
+                        </v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item>
+                            <v-list-item-action>
+                                <v-row justify="center">
+                                    <v-btn text @click="openPdf">Open pdf</v-btn>
+                                </v-row>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </v-row>
         </v-app-bar>
         <v-main>
             <RouterView />
@@ -47,6 +113,16 @@
         name: 'DefaultLayout',
     })
     export default class DefaultLayout extends Vue{
+        get height(){
+            switch (this.$vuetify.breakpoint.name) {
+                case 'xs': return 220
+                case 'sm': return 400
+                case 'md': return 500
+                case 'lg': return 600
+                case 'xl': return 800
+            }
+        }
+        
         scrollToElement(index:number):void {
             const yOffset = -80;
             const element = document.getElementsByClassName('page-section')[index];
