@@ -1,13 +1,14 @@
 ﻿<template>
     <v-card dark>
-        <v-carousel>
+        <v-carousel height="auto">
             <v-carousel-item
                     v-for="(image,i) in project.images"
                     :key="i"
-                    :src="`data:image/png;base64,${image.image}`"
                     reverse-transition="fade-transition"
                     transition="fade-transition"
-            ></v-carousel-item>
+            >
+                <v-img contain  height="auto" :src="`data:image/png;base64,${image.image}`"></v-img>
+            </v-carousel-item>
         </v-carousel>
         <v-card-title>{{project.title}}</v-card-title>
         <v-card-text>
@@ -55,4 +56,5 @@
     .project-text{
         overflow-y: auto;
     }
+    
 </style>
