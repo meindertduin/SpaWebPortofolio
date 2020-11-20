@@ -24,6 +24,7 @@
   import Contact from "@/components/Contact.vue";
   import Profile from "@/components/Profile.vue";
   import Welcome from "@/components/Welcome.vue";
+  import {projectModel} from "@/common/types";
   
   @Component({
     name: 'Home',
@@ -36,8 +37,14 @@
     }
   })
   export default class Home extends Vue{
+    get loadedProjects():Array<projectModel>{
+      return this.$store.getters['projectsModule/loadedProjects']
+    }
+    
     created(){
-      console.log(process.env.VUE_APP_CLIENT_SECRET);
+      if (this.loadedProjects.length <= 0){
+        this.$store.dispatch('projectsModule/loadProjects');
+      }
     }
   }
 </script>

@@ -1,14 +1,14 @@
 ﻿<template>
     <v-card dark>
-        <v-carousel height="auto">
+        <v-carousel>
             <v-carousel-item
-                    v-for="(image,i) in project.images"
+                    v-for="(item,i) in project.images"
                     :key="i"
+                    :src="`data:image/png;base64,${item.image}`"
                     reverse-transition="fade-transition"
+                    contain
                     transition="fade-transition"
-            >
-                <v-img contain  height="auto" :src="`data:image/png;base64,${image.image}`"></v-img>
-            </v-carousel-item>
+            ></v-carousel-item>
         </v-carousel>
         <v-card-title>{{project.title}}</v-card-title>
         <v-card-text>
@@ -56,5 +56,9 @@
     .project-text{
         overflow-y: auto;
     }
+
+
+
+    .v-carousel-item { &-x-transition, &-x-reverse-transition, &-y-transition, &-y-reverse-transition { &-enter-active, &-leave-active { transition: .6s cubic-bezier(.25, .8, .50, 1) !important; } } }
     
 </style>
