@@ -26,12 +26,14 @@ import {Watch} from "vue-property-decorator";
       }
       
       getDisplaySizeFromVuetify():number{
+        // @ts-ignore
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 220
           case 'sm': return 400
           case 'md': return 500
           case 'lg': return 600
           case 'xl': return 800
+          default: return 600;
         }
       }
   

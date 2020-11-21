@@ -32,21 +32,6 @@
         get loadedProjects():Array<projectModel>{
             return this.$store.getters['projectsModule/loadedProjects']
         }
-        
-        private items =  [
-            {
-                src: 'files/laptop.jpg',
-            },
-            {
-                src: 'files/mountains.jpg',
-            },
-            {
-                src: 'files/misty-waters.jpg',
-            },
-            {
-                src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-            },
-        ],
     }
 </script>
 
@@ -55,7 +40,7 @@
         overflow-y: auto;
     }
     
-    .project-feature-wrapper{
+    .project-feature-wraer{
         display: flex;
         flex-wrap: wrap;
         height: 40px;
