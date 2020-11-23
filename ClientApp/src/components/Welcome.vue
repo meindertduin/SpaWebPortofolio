@@ -23,7 +23,6 @@
     })
     export default class Welcome extends Vue{
         get displaySize(){
-            console.log(this.$store.getters.getDisplaySize)
             return this.$store.getters.getDisplaySize;
         }
         

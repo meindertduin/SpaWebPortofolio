@@ -16,7 +16,6 @@
         }
 
         created(){
-            console.log("this happens")
             this.oidcSignInCallback()
                 .then((redirectPath) => {
                     location.href = redirectPath;

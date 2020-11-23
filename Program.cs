@@ -22,13 +22,13 @@ namespace SpaWebPortofolio
                 var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-                var admin = new IdentityUser("Admin"){ Email = "meindertwebportofolio@gmail.com"};
+                var admin = new IdentityUser("admin"){ Email = "meindertwebportofolio@gmail.com"};
                 
                 string adminPassword;
 
                 if (env.IsProduction())
                 {
-                    adminPassword = configuration["AdminPassword"] ?? "password";
+                    adminPassword = configuration["AdminPassword"];
                 }
                 else
                 {

@@ -87,10 +87,7 @@
         handleDeleteImage(imageId: number){
             axios.delete(`api/projects/delete/projectImage/${imageId}`)
                 .then((response) => {
-                    console.log(response);
                     if (this.loadedEditProject){
-                        console.log(this.loadedImages);
-                        console.log(imageId);
                         this.loadedImages = this.loadedImages?.filter(i => i.id !== imageId);
                     }
                 })
@@ -138,12 +135,10 @@
                 githubLink: this.loadedEditProject?.githubLink,
                 demoLink: this.loadedEditProject?.demoLink,
             };
-
-            console.log(projectForm);
+            
             
             axios.put(`api/projects/edit/project/${this.loadedEditProject?.id}`, projectForm)
                 .then((response) => {
-                    console.log(response);
                     if (response.status === 202){
                         if (Object.keys(this.newScreenShots).length > 0 && this.newScreenShots.constructor !== Object){
                             axios.post(`api/projects/upload/screenshot/${response.data.id}`, screenShots, {
