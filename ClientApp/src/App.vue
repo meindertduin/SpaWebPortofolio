@@ -15,6 +15,14 @@ import {Watch} from "vue-property-decorator";
       'default-layout': DefaultLayout,
       'admin-layout': AdminLayout,
     },
+    watch: {
+      $route: {
+        immediate: true,
+        handler(to, from) {
+          document.title = to.meta.title || 'Meindert portfolio';
+        }
+      },
+    }
   })
   export default class App extends Vue{
       get layout(){

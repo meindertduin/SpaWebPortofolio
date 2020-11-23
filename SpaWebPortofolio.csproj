@@ -62,7 +62,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Attributes" />
     <Folder Include="ClientApp\src\components\Common" />
   </ItemGroup>
 
