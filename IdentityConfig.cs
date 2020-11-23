@@ -44,12 +44,12 @@ namespace SpaWebPortofolio
                     
                     RedirectUris = new[]
                     {
-                        "https://localhost:5001/oidc-callback",
-                        "https://localhost:5001/oidc-client-silent-renew.html",
+                        $"{Startup.StaticConfig["SpaBaseUrl"]}/oidc-callback",
+                        $"{Startup.StaticConfig["SpaBaseUrl"]}/oidc-client-silent-renew.html",
                     },
                     PostLogoutRedirectUris = new[]
                     {
-                        "https://localhost:5001",
+                        Startup.StaticConfig["SpaBaseUrl"],
                     },
                     
                     AllowedScopes = new[]

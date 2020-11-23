@@ -60,10 +60,6 @@
   <ItemGroup>
     <Content Include="ClientApp\tsconfig.json" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="ClientApp\src\components\Common" />
-  </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\plugins\vuetify.ts" />
