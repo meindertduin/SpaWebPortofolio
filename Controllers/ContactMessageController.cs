@@ -31,6 +31,13 @@ namespace SpaWebPortofolio.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload([FromBody] ContactMessageForm contactMessage)
         {
+            var sanitizer = new HtmlSanitizer();
+            
+            contactMessage.Email = sanitizer.Sanitize(contactMessage.Email);
+            contactMessage.Name = sanitizer.Sanitize(contactMessage.Name);
+            contactMessage.Subject = sanitizer.Sanitize(contactMessage.Subject);
+            contactMessage.Message = sanitizer.Sanitize(contactMessage.Message);
+            
             _applicationDbContext.ContactMessages.Add(new ContactMessage()
             {
                 Name = contactMessage.Name,
@@ -40,15 +47,8 @@ namespace SpaWebPortofolio.Controllers
             });
 
             _applicationDbContext.SaveChanges();
-
-            var sanitizer = new HtmlSanitizer();
-
-            contactMessage.Email = sanitizer.Sanitize(contactMessage.Email);
-            contactMessage.Name = sanitizer.Sanitize(contactMessage.Name);
-            contactMessage.Subject = sanitizer.Sanitize(contactMessage.Subject);
-            contactMessage.Message = sanitizer.Sanitize(contactMessage.Message);
-
-            await _mailerService.SendEmailAsync("meindertvanduin99@gmail.com", $"Message from {contactMessage.Email}", contactMessage);
+            
+            //await _mailerService.SendEmailAsync("meindertvanduin99@gmail.com", $"Message from {contactMessage.Email}", contactMessage);
 
             return Ok();
         }

@@ -24,18 +24,9 @@ namespace SpaWebPortofolio
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
                 var admin = new IdentityUser("admin"){ Email = "meindertwebportofolio@gmail.com"};
                 
-                string adminPassword;
 
-                if (env.IsProduction())
-                {
-                    adminPassword = configuration["AdminPassword"];
-                }
-                else
-                {
-                    adminPassword = "password";
-                } 
-                
-                
+                var adminPassword = configuration["AdminPassword"];
+
                 userManager.CreateAsync(admin, adminPassword).GetAwaiter().GetResult();
                 
                 try

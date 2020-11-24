@@ -3,6 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices;
@@ -135,7 +136,7 @@ namespace SpaWebPortofolio
                     {
                         builder
                             .AllowCredentials()
-                            .WithOrigins("https://localhost:5001")
+                            .WithOrigins(Configuration["SpaBaseUrl"])
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
@@ -167,6 +168,12 @@ namespace SpaWebPortofolio
             app.UseSpaStaticFiles();
             
             app.UseRouting();
+            
+            app.UseCookiePolicy(new CookiePolicyOptions()
+            {
+                MinimumSameSitePolicy = SameSiteMode.None,
+                Secure = CookieSecurePolicy.Always,
+            });
             
             app.UseAuthentication();
             
