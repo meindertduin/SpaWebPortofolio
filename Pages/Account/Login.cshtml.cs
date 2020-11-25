@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaWebPortofolio.Pages.Account
 {
+    [ValidateAntiForgeryToken]
     public class Login : PageModel
     {
         [BindProperty] public LoginForm Form { get; set; }
@@ -14,7 +17,6 @@ namespace SpaWebPortofolio.Pages.Account
         {
             Form = new LoginForm() {ReturnUrl = returnUrl};
         }
-        
         public async Task<IActionResult> OnPost([FromServices] SignInManager<IdentityUser> signInManager, 
             [FromServices] UserManager<IdentityUser> userManager)
         {
@@ -30,6 +32,7 @@ namespace SpaWebPortofolio.Pages.Account
                 return Redirect(Form.ReturnUrl);
             }
 
+            ModelState.AddModelError(String.Empty , "Incorrect user name or password.");
             return Page();
         }
     }

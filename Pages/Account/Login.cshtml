@@ -10,11 +10,12 @@
         <div class="col-md-6">
             <h3>Login</h3>
             <form method="post">
+                @Html.ValidationSummary(false)
                 <input type="hidden" asp-for="Form.ReturnUrl" value="@Model.Form.ReturnUrl"/>
                 <div class="form-group">
                     <a asp-page="/Account/Register" asp-route-returnUrl="@Model.Form.ReturnUrl" class="btnForgetPwd">Register</a>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label" for="userNameForm">UserTitle</label>
                     <span class="valSpan" asp-validation-for="Form.Username"></span>
@@ -28,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <div class="row justify-content-center">
-                        <input type="submit" class="btnSubmit" value="Login" />
+                        <input type="submit" class="btnSubmit" value="Login"/>
                     </div>
                 </div>
             </form>
