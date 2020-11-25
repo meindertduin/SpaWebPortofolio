@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
+using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -155,10 +156,16 @@ namespace SpaWebPortofolio
                 app.UseHsts();
                 app.UseHttpsRedirection();
 
-                app.UseForwardedHeaders(new ForwardedHeadersOptions()
+                var forwardOptions = new ForwardedHeadersOptions
                 {
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-                });
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+                    RequireHeaderSymmetry = false
+                };
+
+                forwardOptions.KnownNetworks.Clear();
+                forwardOptions.KnownProxies.Clear();
+
+                app.UseForwardedHeaders(forwardOptions);
             }
 
             app.UseCors("AllowAllOrigins");
