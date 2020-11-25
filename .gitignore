@@ -6,6 +6,8 @@
 wwwroot/public
 wwwroot/
 
+rsaCert.pfx
+
 # User-specific files
 *.suo
 *.user

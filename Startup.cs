@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Authentication;
@@ -60,7 +61,6 @@ namespace SpaWebPortofolio
                 }
             });
             
-            // identity db context
             services.AddDbContext<IdentityUserDbContext>(builder =>
             {
                 builder.UseInMemoryDatabase("IdentityDb");
@@ -106,8 +106,12 @@ namespace SpaWebPortofolio
                 .AddInMemoryClients(DevelopmentIdentityConfiguration.GetClients())
                 .AddInMemoryApiScopes(DevelopmentIdentityConfiguration.GetApiScopes());
 
-            identityServiceBuilder.AddDeveloperSigningCredential();
-
+            var rsaCertificate = new X509Certificate2(
+                Path.Combine(_webHostEnvironment.ContentRootPath, "rsaCert.pfx"), 
+                Environment.GetEnvironmentVariable("IdentityCertPassword") ?? "1234");
+            
+            identityServiceBuilder.AddSigningCredential(rsaCertificate);    
+            
             services.AddLocalApiAuthentication();
 
             services.ConfigureApplicationCookie(config =>
@@ -127,12 +131,11 @@ namespace SpaWebPortofolio
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
-                //configuration.RootPath = "/public/";
             });
             
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigins",
+                options.AddPolicy("AllowSpaOrigin",
                     builder =>
                     {
                         builder
@@ -168,7 +171,7 @@ namespace SpaWebPortofolio
                 app.UseForwardedHeaders(forwardOptions);
             }
 
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowSpaOrigin");
             
             app.UseStaticFiles();
 
