@@ -18,7 +18,7 @@
                             </v-btn>
                         </div>
                     </div>
-                    <div class="contact-item-content pa-4">
+                    <div class="contact-item-content">
                         <div class="text-h6">
                             Email:
                         </div>
@@ -38,7 +38,7 @@
                             </v-btn>
                         </div>
                     </div>
-                    <div class="contact-item-content pa-4">
+                    <div class="contact-item-content">
                         <div class="text-h6">
                             Telefoon:
                         </div>
@@ -58,7 +58,7 @@
                             </v-btn>
                         </div>
                     </div>
-                    <div class="contact-item-content pa-4">
+                    <div class="contact-item-content">
                         <div class="text-h6">
                             Github:
                         </div>
