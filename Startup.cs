@@ -1,8 +1,7 @@
 using System;
 using System.IO;
+using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
-using IdentityServer4.Configuration;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,10 +36,24 @@ namespace SpaWebPortofolio
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
+
             services
                 .AddFluentEmail(Configuration["ContactAddress"])
-                .AddSmtpSender("localhost", 25);
+                .AddSmtpSender(() =>
+                {
+                    if (_webHostEnvironment.IsDevelopment())
+                    {
+                        return new SmtpClient("127.0.0.1", 25)
+                        {
+                            EnableSsl = false,
+                            UseDefaultCredentials = true,
+                        };
+                    }
+                    else
+                    {
+                        return new SmtpClient("127.0.0.1", 25);
+                    }
+                });
 
             services.AddRazorPages();
 

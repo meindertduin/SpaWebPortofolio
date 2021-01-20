@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
-using FluentEmail;
 using FluentEmail.Core;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SpaWebPortofolio.Data;
 
 namespace SpaWebPortofolio.Controllers
 {
@@ -12,17 +10,15 @@ namespace SpaWebPortofolio.Controllers
     [Route("api/contactMessage")]
     public class ContactMessageController : ControllerBase
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-        public ContactMessageController(ApplicationDbContext applicationDbContext, IConfiguration configuration)
+        public ContactMessageController(IConfiguration configuration)
         {
-            _applicationDbContext = applicationDbContext;
             _configuration = configuration;
         }
         
         [HttpPost]
-        public async Task<IActionResult> Upload([FromBody] ContactMessageForm contactMessage)
+        public async Task<IActionResult> Upload([FromBody] ContactMessageForm contactMessage, [FromServices] IFluentEmail fluentEmail)
         {
             var sanitizer = new HtmlSanitizer();
             
@@ -31,12 +27,12 @@ namespace SpaWebPortofolio.Controllers
             contactMessage.Subject = sanitizer.Sanitize(contactMessage.Subject);
             contactMessage.Message = sanitizer.Sanitize(contactMessage.Message);
             
-            await Email
-                .From(contactMessage.Email)
+            fluentEmail
                 .To(_configuration["ContactAddress"])
                 .Subject($"{contactMessage.Name} heeft gereageerd via je website")
-                .Body(contactMessage.Message)
-                .SendAsync();
+                .Body(contactMessage.Message);
+
+            await fluentEmail.SendAsync();
             
             return Ok();
         }
