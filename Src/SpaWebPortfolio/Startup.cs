@@ -1,4 +1,5 @@
 using System.Net.Mail;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SpaWebPortofolio.Data;
 using SpaWebPortofolio.Interfaces;
 using SpaWebPortofolio.Services;
@@ -54,18 +56,11 @@ namespace SpaWebPortofolio
 
             services.AddDbContext<ApplicationDbContext>(config =>
             {
-                if (_webHostEnvironment.IsDevelopment())
+                var conn = Configuration["ConnectionString"];
+                config.UseSqlite(conn, b =>
                 {
-                    config.UseInMemoryDatabase("Dev");
-                }
-                else
-                {
-                    var conn = Configuration["ConnectionStrings:SpaDatabase"];
-                    config.UseSqlServer(conn, b =>
-                    {
-                        b.MigrationsAssembly("SpaWebPortofolio");
-                    });
-                }
+                    b.MigrationsAssembly("SpaWebPortofolio");
+                });
             });
             
             services.AddDbContext<IdentityUserDbContext>(builder =>
@@ -133,10 +128,18 @@ namespace SpaWebPortofolio
                             .AllowAnyMethod();
                     });
             });
+            
+            var cors = new DefaultCorsPolicyService(new LoggerFactory().CreateLogger<DefaultCorsPolicyService>())
+            {
+                AllowAll = true
+            };
+            services.AddSingleton<ICorsPolicyService>(cors);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            UpdateDatabase(app);
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -158,22 +161,16 @@ namespace SpaWebPortofolio
 
                 app.UseForwardedHeaders(forwardOptions);
             }
-
-            app.UseCors("AllowSpaOrigin");
             
             app.UseStaticFiles();
             
             app.UseRouting();
-            
-            app.UseCookiePolicy(new CookiePolicyOptions()
-            {
-                MinimumSameSitePolicy = SameSiteMode.None,
-                Secure = CookieSecurePolicy.Always,
-            });
+
+            app.UseCors("AllowSpaOrigin");
+
+            app.UseIdentityServer();
             
             app.UseAuthentication();
-            
-            app.UseIdentityServer();
 
             app.UseAuthorization();
 
@@ -186,6 +183,17 @@ namespace SpaWebPortofolio
 
                 endpoints.MapRazorPages();
             });
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

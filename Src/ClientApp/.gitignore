@@ -8,6 +8,8 @@ node_modules
 
 key.pem
 cert.pem
+AppDatabase.db
+AppDatabase
 
 # Log files
 npm-debug.log*

@@ -8,7 +8,6 @@ namespace SpaWebPortofolio.Controllers
     {
         public string Title { get; set; }
         public ProjectDisplaySize DisplaySize { get; set; }
-        public List<IFormFile> ScreenShots { get; set; }
         public string[] Features { get; set; }
         public string Description { get; set; }
         public string GithubLink { get; set; }

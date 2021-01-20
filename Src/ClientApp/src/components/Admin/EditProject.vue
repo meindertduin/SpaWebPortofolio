@@ -85,7 +85,12 @@
         }
 
         handleDeleteImage(imageId: number){
-            axios.delete(`api/projects/delete/projectImage/${imageId}`)
+            axios.delete(`api/projects/delete/projectImage/${imageId}`, {
+              withCredentials: true,
+              headers: {
+                "Authorization": `Bearer ${this.$store.state.oidcStore.access_token}`
+              }
+            })
                 .then((response) => {
                     if (this.loadedEditProject){
                         this.loadedImages = this.loadedImages?.filter(i => i.id !== imageId);
@@ -96,7 +101,12 @@
         }
 
         handleDeleteProject(){
-            axios.delete(`api/projects/delete/project/${this.loadedEditProject?.id}`);
+            axios.delete(`api/projects/delete/project/${this.loadedEditProject?.id}`, {
+              withCredentials: true,
+              headers: {
+                "Authorization": `Bearer ${this.$store.state.oidcStore.access_token}`
+              }
+            });
             this.$store.commit('adminModule/SET_PAGE_NUMBER', 1);
             this.$store.dispatch('projectsModule/loadProjects');
         }
@@ -137,13 +147,21 @@
             };
             
             
-            axios.put(`api/projects/edit/project/${this.loadedEditProject?.id}`, projectForm)
+            axios.put(`api/projects/edit/project/${this.loadedEditProject?.id}`, projectForm, {
+              withCredentials: true,
+              headers: {
+                "Authorization": `Bearer ${this.$store.state.oidcStore.access_token}`
+              }
+            })
                 .then((response) => {
                     if (response.status === 202){
                         if (Object.keys(this.newScreenShots).length > 0 && this.newScreenShots.constructor !== Object){
                             axios.post(`api/projects/upload/screenshot/${response.data.id}`, screenShots, {
+                              withCredentials: true,
                                 headers: {
-                                    'Content-Type': 'multipart/form-data'
+                                    'Content-Type': 'multipart/form-data',
+                                    "Authorization": `Bearer ${this.$store.state.oidcStore.access_token}`
+
                                 }
                             }).then((response) => {
                                 this.$store.dispatch('projectsModule/loadProjects').then(() => {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpaWebPortofolio.Attributes;
 using SpaWebPortofolio.Data;
 using SpaWebPortofolio.Interfaces;
 
@@ -61,6 +62,7 @@ namespace SpaWebPortofolio.Controllers
         }
         
         [HttpPost("upload")]
+        [DisableFormValueModelBinding]
         public async Task<IActionResult> Upload(ProjectForm projectForm)
         {
             var newProject = new Project()
@@ -81,6 +83,7 @@ namespace SpaWebPortofolio.Controllers
         }
 
         [HttpPost("upload/screenshot/{id}")]
+        [DisableFormValueModelBinding]
         public async Task<IActionResult> UploadProjectImages(List<IFormFile> screenShots, int id)
         {
             var project = _applicationDbContext.Projects.FirstOrDefault(x => x.Id == id);

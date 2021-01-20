@@ -90,12 +90,20 @@
 
             console.log(projectForm);
             
-            axios.post('/api/projects/upload', projectForm)
+            axios.post('/api/projects/upload', projectForm, {
+              withCredentials: true,
+              headers: {
+                "Authorization": `Bearer ${this.$store.state.oidcStore.access_token}`
+              }
+            })
                 .then((response) => {
+                  console.log(response);
                     if (response.status == 200){
                         axios.post(`api/projects/upload/screenshot/${response.data.id}`, screenShots, {
+                            withCredentials: true,
                             headers: {
-                                'Content-Type': 'multipart/form-data'
+                                'Content-Type': 'multipart/form-data',
+                                "Authorization": `Bearer ${this.$store.state.oidcStore.access_token}`
                             }
                         }).then((response) => {
                             this.$store.dispatch('projectsModule/loadProjects');
