@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaWebPortofolio", "SpaWebPortofolio.csproj", "{D1A4B196-FA92-4822-8C25-07D53A2903EF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{BF041BBF-D79B-44C8-B7D5-6BC71E7DB3A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaWebPortofolio", "Src\SpaWebPortfolio\SpaWebPortofolio.csproj", "{B3277EEE-80F6-4482-9B19-8093E6F2DBAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +17,18 @@ Global
 		{D1A4B196-FA92-4822-8C25-07D53A2903EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1A4B196-FA92-4822-8C25-07D53A2903EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1A4B196-FA92-4822-8C25-07D53A2903EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3277EEE-80F6-4482-9B19-8093E6F2DBAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3277EEE-80F6-4482-9B19-8093E6F2DBAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3277EEE-80F6-4482-9B19-8093E6F2DBAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3277EEE-80F6-4482-9B19-8093E6F2DBAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FEBD4BD6-299C-48F2-8D24-13F9B53219E2}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3277EEE-80F6-4482-9B19-8093E6F2DBAB} = {BF041BBF-D79B-44C8-B7D5-6BC71E7DB3A5}
 	EndGlobalSection
 EndGlobal

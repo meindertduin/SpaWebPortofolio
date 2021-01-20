@@ -1,13 +1,9 @@
-using System;
-using System.IO;
 using System.Net.Mail;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using SpaWebPortofolio.Data;
 using SpaWebPortofolio.Interfaces;
 using SpaWebPortofolio.Services;
-using VueCliMiddleware;
 
 namespace SpaWebPortofolio
 {
@@ -125,11 +120,6 @@ namespace SpaWebPortofolio
                     builder.RequireAuthenticatedUser();
                 });
             });
-
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
             
             services.AddCors(options =>
             {
@@ -172,8 +162,6 @@ namespace SpaWebPortofolio
             app.UseCors("AllowSpaOrigin");
             
             app.UseStaticFiles();
-
-            app.UseSpaStaticFiles();
             
             app.UseRouting();
             
@@ -194,22 +182,9 @@ namespace SpaWebPortofolio
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-
-                if (env.IsDevelopment())
-                {
-                    endpoints.MapToVueCliProxy(
-                        "{*path}",
-                        new SpaOptions { SourcePath = "ClientApp" },
-                        npmScript: "serve",
-                        regex: "Compiled successfully");
-                }
+                
 
                 endpoints.MapRazorPages();
-            });
-
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
             });
         }
     }
