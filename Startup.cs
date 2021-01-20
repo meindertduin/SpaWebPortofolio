@@ -49,10 +49,8 @@ namespace SpaWebPortofolio
                             UseDefaultCredentials = true,
                         };
                     }
-                    else
-                    {
-                        return new SmtpClient("127.0.0.1", 25);
-                    }
+
+                    return new SmtpClient("127.0.0.1", 25);
                 });
 
             services.AddRazorPages();
@@ -84,22 +82,11 @@ namespace SpaWebPortofolio
                 {
                     options.User.RequireUniqueEmail = true;
 
-                    if (_webHostEnvironment.IsDevelopment())
-                    {
-                        options.Password.RequireDigit = false;
-                        options.Password.RequiredLength = 6;
-                        options.Password.RequireUppercase = false;
-                        options.Password.RequireLowercase = false;
-                        options.Password.RequireNonAlphanumeric = false;
-                    }
-                    else
-                    {
-                        options.Password.RequireDigit = true;
-                        options.Password.RequiredLength = 8;
-                        options.Password.RequireUppercase = true;
-                        options.Password.RequireLowercase = true;
-                        options.Password.RequireNonAlphanumeric = false;
-                    }
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
                 })
                 .AddEntityFrameworkStores<IdentityUserDbContext>()
                 .AddDefaultTokenProviders();
@@ -120,11 +107,8 @@ namespace SpaWebPortofolio
                 .AddInMemoryClients(DevelopmentIdentityConfiguration.GetClients())
                 .AddInMemoryApiScopes(DevelopmentIdentityConfiguration.GetApiScopes());
 
-            var rsaCertificate = new X509Certificate2(
-                Path.Combine(_webHostEnvironment.ContentRootPath, "rsaCert.pfx"), 
-                Environment.GetEnvironmentVariable("IdentityCertPassword") ?? "1234");
-            
-            identityServiceBuilder.AddSigningCredential(rsaCertificate);    
+
+            identityServiceBuilder.AddDeveloperSigningCredential();
             
             services.AddLocalApiAuthentication();
 
