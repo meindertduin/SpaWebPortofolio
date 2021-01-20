@@ -37,9 +37,10 @@ namespace SpaWebPortofolio
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            services.Configure<MailKitMailSenderOptions>(Configuration.GetSection("SmptHostSettings"));
-            services.AddSingleton<IMailerService, AutoMessageMailerServiceService>();
+            
+            services
+                .AddFluentEmail(Configuration["ContactAddress"])
+                .AddSmtpSender("localhost", 25);
 
             services.AddRazorPages();
 

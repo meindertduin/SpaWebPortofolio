@@ -23,11 +23,12 @@
 
   <ItemGroup>
     <PackageReference Include="CertificateManager" Version="1.0.5" />
+    <PackageReference Include="FluentEmail.Core" Version="2.9.0" />
+    <PackageReference Include="FluentEmail.Smtp" Version="2.9.0" />
     <PackageReference Include="HtmlSanitizer" Version="5.0.355" />
     <PackageReference Include="IdentityServer4" Version="4.1.1" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.1" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.1" />
-    <PackageReference Include="MailKit" Version="2.9.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />

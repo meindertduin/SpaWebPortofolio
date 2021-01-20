@@ -1,14 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Net.Mail;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using FluentEmail;
+using FluentEmail.Core;
 using Ganss.XSS;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using MimeKit;
+using Microsoft.Extensions.Configuration;
 using SpaWebPortofolio.Data;
-using SpaWebPortofolio.Services;
-using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace SpaWebPortofolio.Controllers
 {
@@ -16,16 +12,13 @@ namespace SpaWebPortofolio.Controllers
     [Route("api/contactMessage")]
     public class ContactMessageController : ControllerBase
     {
-        private readonly IMailerService _mailerService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ApplicationDbContext _applicationDbContext;
+        private IConfiguration _configuration;
 
-        public ContactMessageController(ApplicationDbContext applicationDbContext, IMailerService mailerService, IWebHostEnvironment webHostEnvironment)
+        public ContactMessageController(ApplicationDbContext applicationDbContext, IConfiguration configuration)
         {
-            _mailerService = mailerService;
-            _webHostEnvironment = webHostEnvironment;
             _applicationDbContext = applicationDbContext;
-
+            _configuration = configuration;
         }
         
         [HttpPost]
@@ -38,18 +31,13 @@ namespace SpaWebPortofolio.Controllers
             contactMessage.Subject = sanitizer.Sanitize(contactMessage.Subject);
             contactMessage.Message = sanitizer.Sanitize(contactMessage.Message);
             
-            _applicationDbContext.ContactMessages.Add(new ContactMessage()
-            {
-                Name = contactMessage.Name,
-                Subject = contactMessage.Subject,
-                Message = contactMessage.Message,
-                Email = contactMessage.Email,
-            });
-
-            _applicationDbContext.SaveChanges();
+            await Email
+                .From(contactMessage.Email)
+                .To(_configuration["ContactAddress"])
+                .Subject($"{contactMessage.Name} heeft gereageerd via je website")
+                .Body(contactMessage.Message)
+                .SendAsync();
             
-            //await _mailerService.SendEmailAsync("meindertvanduin99@gmail.com", $"Message from {contactMessage.Email}", contactMessage);
-
             return Ok();
         }
     }
