@@ -3,6 +3,7 @@
   <component name="ContentModelUserStore">
     <attachedFolders>
       <Path>Src/ClientApp</Path>
+      <Path>Src/SpaWebPortfolio/wwwroot</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />
