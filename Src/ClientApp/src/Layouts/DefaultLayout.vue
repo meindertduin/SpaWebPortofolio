@@ -128,7 +128,7 @@
         }
 
         openPdf():void{
-            const fileUrl= '/files/Meindert van Duin CV 2020.pdf'
+            const fileUrl= '  /Meindert van Duin CV 2020.pdf'
             window.open(fileUrl);
         }   
     }

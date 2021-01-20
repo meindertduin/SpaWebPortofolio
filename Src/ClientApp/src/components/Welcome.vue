@@ -1,5 +1,5 @@
 ﻿<template>
-    <v-img src="files/misty-waters.jpg" :max-height="`${welcomeImageSize}px`" >
+    <v-img src="/misty-waters.jpg" :max-height="`${welcomeImageSize}px`" >
         <v-row class="fill-height ma-6" justify="center" align-content="center">
             <div class="text-center">
                 <div class="welcome-text">Web-Portfolio</div>
