@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using FluentEmail.Core;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace SpaWebPortofolio.Controllers
             fluentEmail
                 .To(_configuration["ContactAddress"])
                 .Subject($"{contactMessage.Name} heeft gereageerd via je website")
-                .Body(contactMessage.Message);
+                .Body($"Bericht van: {contactMessage.Email}\r\n" + contactMessage.Message);
 
             await fluentEmail.SendAsync();
             
