@@ -1,4 +1,6 @@
+using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography.X509Certificates;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,7 +49,12 @@ namespace SpaWebPortofolio
                         };
                     }
 
-                    return new SmtpClient("127.0.0.1", 25);
+                    return new SmtpClient(Configuration["Smtp:Host"], int.Parse(Configuration["Smtp:Port"]))
+                    {
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        Credentials = new NetworkCredential(Configuration["Smtp:Login"], Configuration["Smtp:Password"]),
+                    };
                 });
 
             services.AddRazorPages();
@@ -98,7 +105,16 @@ namespace SpaWebPortofolio
                 .AddInMemoryApiScopes(DevelopmentIdentityConfiguration.GetApiScopes());
 
 
-            identityServiceBuilder.AddDeveloperSigningCredential();
+
+            if (_webHostEnvironment.IsDevelopment())
+            {
+                identityServiceBuilder.AddDeveloperSigningCredential();
+            }
+            else
+            {
+                identityServiceBuilder.AddSigningCredential(new X509Certificate2(Configuration["Crypt:Cert"],
+                    Configuration["Crypt:Password"]));
+            }
             
             services.AddLocalApiAuthentication();
 
