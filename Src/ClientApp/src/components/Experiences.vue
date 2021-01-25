@@ -51,17 +51,17 @@
             frontend: {
                 title: "Frontend",
                 icon: "mdi-laptop-chromebook",
-                items: ["Javascript (es5 / es6)", "HTML5", "CSS3", "Vue js", "Nuxt js"]
+                items: ["Javascript","Typescript" ,"HTML5", "CSS", "Vue js"]
             },
             backend: {
                 title: "Backend",
                 icon: "mdi-server",
-                items: [".Net Core", "Asp .Net Core", "Entity framework", "MSSQL"]
+                items: ["(ASP) .Net Core", "(ASP) .Net 5", "SQL", "Entity framework"]
             },
             misc: {
                 title: "Overig",
                 icon: "mdi-web",
-                items: ["Docker", "Git", "Visual studio"]
+                items: ["Git", "Docker", "Nginx", "Visual studio"]
             }
         };
         
