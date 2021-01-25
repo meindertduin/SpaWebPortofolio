@@ -70,6 +70,9 @@
         created(){
             this.loadedEditProject = this.$store.getters['adminModule/loadedEditProject'];
             this.loadedImages = this.loadedEditProject?.images;
+            this.featuresString = this.loadedEditProject? this.loadedEditProject.features.join(','): "";
+
+          console.log(this.featuresString);
             
             switch (this.loadedEditProject?.displaySize) {
                 case 0:
