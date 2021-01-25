@@ -15,6 +15,7 @@
 
 AppDatabase.db
 AppDatabase
+tempkey.jwk
 
 # Build results
 [Dd]ebug/
