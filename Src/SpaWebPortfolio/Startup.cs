@@ -1,6 +1,10 @@
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,11 +64,10 @@ namespace SpaWebPortofolio
             services.AddRazorPages();
 
             services.AddTransient<IImageCuttingService, ImageCuttingService>();
-
+            
             services.AddDbContext<ApplicationDbContext>(config =>
             {
-                var conn = Configuration["ConnectionString"];
-                config.UseSqlite(conn, b =>
+                config.UseSqlite(Configuration["ConnectionString"], b =>
                 {
                     b.MigrationsAssembly("SpaWebPortofolio");
                 });
@@ -72,7 +75,10 @@ namespace SpaWebPortofolio
             
             services.AddDbContext<IdentityUserDbContext>(builder =>
             {
-                builder.UseInMemoryDatabase("IdentityDb");
+                builder.UseSqlite(Configuration["ConnectionString"], b =>
+                {
+                    b.MigrationsAssembly(typeof(Startup).Assembly.ToString());
+                });
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -90,21 +96,24 @@ namespace SpaWebPortofolio
             
             var identityServiceBuilder = services.AddIdentityServer();
             identityServiceBuilder.AddAspNetIdentity<IdentityUser>();
-            
-            
+
+
             identityServiceBuilder.AddConfigurationStore(options =>
                 {
-                    options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
+                    options.ConfigureDbContext = builder => builder
+                        .UseSqlite(Configuration["ConnectionString"], b =>
+                        {
+                            b.MigrationsAssembly(typeof(Startup).Assembly.ToString());
+                        });
                 })
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = builder => builder.UseInMemoryDatabase("IdentityDb");
-                })
-                .AddInMemoryIdentityResources(DevelopmentIdentityConfiguration.GetIdentityResources())
-                .AddInMemoryClients(DevelopmentIdentityConfiguration.GetClients())
-                .AddInMemoryApiScopes(DevelopmentIdentityConfiguration.GetApiScopes());
-
-
+                    options.ConfigureDbContext = builder => builder
+                        .UseSqlite(Configuration["ConnectionString"], b =>
+                        {
+                            b.MigrationsAssembly(typeof(Startup).Assembly.ToString());
+                        });
+                });
 
             if (_webHostEnvironment.IsDevelopment())
             {
@@ -205,9 +214,41 @@ namespace SpaWebPortofolio
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
+                using (var appDbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
                 {
-                    context.Database.Migrate();
+                    appDbContext.Database.Migrate();
+                }
+                
+                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+
+                var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                
+                configurationDbContext.Database.Migrate();
+                if (!configurationDbContext.Clients.Any())
+                {
+                    foreach (var client in IdentityConfig.GetClients())
+                    {
+                        configurationDbContext.Clients.Add(client.ToEntity());
+                    }
+                    configurationDbContext.SaveChanges();
+                }
+
+                if (!configurationDbContext.IdentityResources.Any())
+                {
+                    foreach (var resource in IdentityConfig.GetIdentityResources())
+                    {
+                        configurationDbContext.IdentityResources.Add(resource.ToEntity());
+                    }
+                    configurationDbContext.SaveChanges();
+                }
+
+                if (!configurationDbContext.ApiResources.Any())
+                {
+                    foreach (var resource in IdentityConfig.GetApiScopes())
+                    {
+                        configurationDbContext.ApiScopes.Add(resource.ToEntity());
+                    }
+                    configurationDbContext.SaveChanges();
                 }
             }
         }

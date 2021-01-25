@@ -5,7 +5,7 @@ using IdentityServer4.Models;
 
 namespace SpaWebPortofolio
 {
-    public static class DevelopmentIdentityConfiguration
+    public static class IdentityConfig
     {
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
