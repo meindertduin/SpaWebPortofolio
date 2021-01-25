@@ -26,7 +26,7 @@ namespace SpaWebPortofolio
                 var adminPassword = configuration["AdminPassword"];
 
                 userManager.CreateAsync(admin, adminPassword).GetAwaiter().GetResult();
-                
+
                 try
                 {
                     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
