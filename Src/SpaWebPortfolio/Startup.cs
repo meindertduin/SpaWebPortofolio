@@ -242,7 +242,7 @@ namespace SpaWebPortofolio
                     configurationDbContext.SaveChanges();
                 }
 
-                if (!configurationDbContext.ApiResources.Any())
+                if (!configurationDbContext.ApiScopes.Any())
                 {
                     foreach (var resource in IdentityConfig.GetApiScopes())
                     {
