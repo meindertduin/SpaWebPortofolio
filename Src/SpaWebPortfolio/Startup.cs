@@ -164,6 +164,7 @@ namespace SpaWebPortofolio
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             UpdateDatabase(app);
+            SetupAdminAccount(app);
             
             if (env.IsDevelopment())
             {
@@ -218,6 +219,11 @@ namespace SpaWebPortofolio
                 {
                     appDbContext.Database.Migrate();
                 }
+
+                using (var identityUserDbContext = serviceScope.ServiceProvider.GetRequiredService<IdentityUserDbContext>())
+                {
+                    identityUserDbContext.Database.Migrate();
+                }
                 
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
 
@@ -250,6 +256,27 @@ namespace SpaWebPortofolio
                     }
                     configurationDbContext.SaveChanges();
                 }
+            }
+        }
+        
+        private static void SetupAdminAccount(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+                var admin = new IdentityUser("admin") {Email = "meindertwebportofolio@gmail.com"};
+
+                var adminPassword = configuration["AdminPassword"];
+                var creationResult = userManager.CreateAsync(admin, adminPassword).GetAwaiter().GetResult();
+
+                if (creationResult.Succeeded == false)
+                {
+                    var adminUser = userManager.FindByNameAsync("admin").GetAwaiter().GetResult();
+                    var token = userManager.GeneratePasswordResetTokenAsync(adminUser).GetAwaiter().GetResult();
+                    userManager.ResetPasswordAsync(adminUser, token, adminPassword).GetAwaiter().GetResult();
+                } 
             }
         }
     }
