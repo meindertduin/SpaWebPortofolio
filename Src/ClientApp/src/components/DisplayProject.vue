@@ -7,7 +7,7 @@
                     :src="`data:image/png;base64,${item.image}`"
                     reverse-transition="fade-transition"
                     transition="fade-transition"
-                    :contain="600>=displaySize"
+                    contain
             ></v-carousel-item>
         </v-carousel>
         <v-card-title>{{project.title}}</v-card-title>
@@ -15,7 +15,7 @@
             <div class="project-feature-wrapper">
                 <div class="mb-2 project-feature orange--text">{{getFeaturesString(project.features)}}</div>
             </div>
-            <div class="project-text" :style="`height:${project.displaySize === 0? 100: 150}px;`">
+            <div class="project-text" :style="`height:${project.displaySize === 0? 150: 200}px;`">
               {{project.description}}
             </div>
         </v-card-text>
@@ -43,11 +43,7 @@
     })
     export default class DisplayProject extends Vue{
         @Prop({type: Object, required: true}) readonly project !: projectModel;
-    
-        get displaySize():number{
-          return this.$store.getters["getDisplaySize"];
-        }
-        
+      
         private getFeaturesString(features: string[]){
             return concatFeaturesString(features);
         }
@@ -58,7 +54,10 @@
     .project-text{
       overflow-y: auto;
       white-space: pre-wrap;
-      border: 1px solid black;
+      border-radius: 20px;
+      box-shadow: -1px -2px 33px -6px rgba(0,0,0,1) inset;
+      -webkit-box-shadow: -1px -2px 33px -6px rgba(0,0,0,1) inset;
+      -moz-box-shadow: -1px -2px 33px -6px rgba(0,0,0,1) inset;
       padding: 8px;
     }
 </style>
