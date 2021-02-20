@@ -76,8 +76,8 @@ namespace SpaWebPortofolio.Controllers
             };
             
 
-            _applicationDbContext.Projects.Add(newProject);
-            _applicationDbContext.SaveChanges();
+            await _applicationDbContext.Projects.AddAsync(newProject);
+            await _applicationDbContext.SaveChangesAsync();
 
             return Ok(newProject);
         }
